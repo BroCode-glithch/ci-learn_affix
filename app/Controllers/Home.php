@@ -10,12 +10,9 @@ class Home extends BaseController
         $courses = new Courses();
 
         // Fetch 2 courses from the database
-        $data['courses_data'] = $courses->orderBy('id', 'DESC')->findAll(); 
-
-        // Load the home.php view into 'content'
-        $data['content'] = view('home', $data);
+        $data['courses_data'] = $courses->orderBy('id', 'DESC')->findAll();  
 
         // Pass the data to the layout
-        return view('layouts/app', $data);
+        return view('home', $data);
     }
 }

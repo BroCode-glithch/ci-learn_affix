@@ -1,3 +1,9 @@
+<?= $this->extend('layouts/app') ?>
+
+<?= $this->section('title') ?>Courses<?= $this->endSection() ?>
+
+<?= $this->section('content') ?>
+
 <?php
 function word_limiter_custom($text, $limit = 25, $end = '...')
 {
@@ -123,3 +129,5 @@ function word_limiter_custom($text, $limit = 25, $end = '...')
     </div>
 </div>
 <!-- Course Details End -->
+
+<?= $this->endSection() ?>

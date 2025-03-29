@@ -59,7 +59,7 @@
                                         <nav>
                                             <ul id="navigation">                                                                                          
                                                 <li class="active" ><a href="<?php echo base_url('/'); ?>">Home</a></li>
-                                                <li><a href="courses.html">Courses</a></li>
+                                                <li><a href="<?= base_url('courses') ?>">Courses</a></li>
                                                 <li><a href="about.html">About</a></li>
                                                 <li><a href="#">Blog</a>
                                                     <ul class="submenu">
@@ -102,7 +102,7 @@
     </header>
 
         <div class="app">
-            <?= isset($content) ? $content : ''; ?>
+            <?= $this->renderSection('content'); ?>
         </div>
 
         <footer>

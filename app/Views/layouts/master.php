@@ -28,15 +28,31 @@
 
     <style>
         .login-form {
-            width: 90%; /* Adjust to fit screen */
-            max-width: 400px; /* Keeps it readable */
+            width: 90%; /* Adjust width */
+            max-width: 380px; /* Smaller max width */
             margin: auto;
-            transform: scale(0.9); /* Scale down slightly */
+            padding: 20px; /* Add padding for spacing */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Keep it centered */
+        }
+
+        .logo-login {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px; /* Space between logo and heading */
+        }
+
+        .logo-login img {
+            max-width: 100px; /* Adjust size as needed */
+            height: auto;
         }
 
         @media (max-width: 768px) {
             .login-form {
-                transform: scale(0.85); /* Scale down further on small screens */
+                max-width: 320px; /* Slightly smaller on small screens */
             }
         }
     </style>

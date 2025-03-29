@@ -8,6 +8,8 @@ use App\Controllers\Courses\CourseController;
  */
 $routes->get('/', 'Home::index');
 
+$routes->get('/courses', 'Courses\CourseController::index');
+
 service('auth')->routes($routes);
 
 $routes->get('course/(:num)', 'Courses\CourseController::show/$1');

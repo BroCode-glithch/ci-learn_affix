@@ -1,3 +1,9 @@
+<?= $this->extend('layouts/app') ?>
+
+<?= $this->section('title') ?>Courses<?= $this->endSection() ?>
+
+<?= $this->section('content') ?>
+
 <section class="slider-area ">
             <div class="slider-active">
                 <!-- Single Slider -->
@@ -441,3 +447,4 @@
         </section>
         <!-- About Area End -->
 
+    <?= $this->endSection() ?>
