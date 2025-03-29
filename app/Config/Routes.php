@@ -13,3 +13,5 @@ $routes->get('/courses', 'Courses\CourseController::index');
 service('auth')->routes($routes);
 
 $routes->get('course/(:num)', 'Courses\CourseController::show/$1');
+$routes->get('courses/course-category/(:any)', 'Courses\CourseController::category/$1');
+

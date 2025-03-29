@@ -12,11 +12,31 @@ class CourseController extends BaseController
     public function index()
     {
         $courseModel = new Courses();
-        $courses = $courseModel->findAll(); // Fetch all courses
-    
-        return view("courses/course", ['courses' => $courses]); // Pass courses to view
+
+        // Fetch distinct categories
+        $data['categories'] = $courseModel->select('DISTINCT(category)')->findAll();
+        $data['courses'] = $courseModel->findAll(); // Fetch all courses
+
+        return view("courses/course", $data);
     }
 
+    public function category($category)
+    {
+        helper('text'); // ✅ Load the text helper to enable word_limiter()
+        
+        $courseModel = new Courses();
+    
+        // Decode category name from URL
+        $category = urldecode($category);
+    
+        // Fetch courses based on category
+        $data['courses'] = $courseModel->where('category', $category)->findAll();
+        $data['category_name'] = $category;
+    
+        return view("courses/course-category", $data);
+    }
+    
+    
     public function show($id)
     {
         helper(['text']); // Load the text helper

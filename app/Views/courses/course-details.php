@@ -47,8 +47,8 @@ function word_limiter_custom($text, $limit = 25, $end = '...')
         <div class="row">
             <div class="col-xl-12">
                 <div class="breadcrumb-text text-center text-white" style="background: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 5px;">
-                    <h2><?= htmlspecialchars($course['title']); ?></h2>
-                    <p><a href="<?= base_url(); ?>">Home</a> / Course Details</p>
+                    <h2 style="color: #fff !important"><?= htmlspecialchars($course['title']); ?></h2>
+                    <p style="color: #fff !important"><a href="<?= base_url(); ?>">Home</a> / Course Details</p>
                 </div>
             </div>
         </div>
