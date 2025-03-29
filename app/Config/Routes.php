@@ -1,6 +1,7 @@
 <?php
 
 use CodeIgniter\Router\RouteCollection;
+use App\Controllers\Courses\CourseController;
 
 /**
  * @var RouteCollection $routes
@@ -8,3 +9,5 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::index');
 
 service('auth')->routes($routes);
+
+$routes->get('course/(:num)', 'Courses\CourseController::show/$1');

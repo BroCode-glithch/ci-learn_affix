@@ -1,65 +1,69 @@
-<?= $this->extend(config('Auth')->views['layout']) ?>
+<?= $this->extend('layouts/master') ?>
 
-<?= $this->section('title') ?><?= lang('Auth.register') ?> <?= $this->endSection() ?>
+<?= $this->section('title') ?><?= lang('Auth.register') ?><?= $this->endSection() ?>
 
 <?= $this->section('main') ?>
 
-    <div class="container d-flex justify-content-center p-5">
-        <div class="card col-12 col-md-5 shadow-sm">
-            <div class="card-body">
-                <h5 class="card-title mb-5"><?= lang('Auth.register') ?></h5>
+<main class="login-body" data-vide-bg="<?= base_url('public/assets/img/login-bg.mp4') ?>">
+    <!-- Registration Form -->
+    <form class="form-default" action="<?= url_to('register') ?>" method="post">
+        <?= csrf_field() ?> <!-- CSRF Protection -->
 
-                <?php if (session('error') !== null) : ?>
-                    <div class="alert alert-danger" role="alert"><?= esc(session('error')) ?></div>
-                <?php elseif (session('errors') !== null) : ?>
-                    <div class="alert alert-danger" role="alert">
-                        <?php if (is_array(session('errors'))) : ?>
-                            <?php foreach (session('errors') as $error) : ?>
-                                <?= esc($error) ?>
-                                <br>
-                            <?php endforeach ?>
-                        <?php else : ?>
-                            <?= esc(session('errors')) ?>
-                        <?php endif ?>
-                    </div>
-                <?php endif ?>
-
-                <form action="<?= url_to('register') ?>" method="post">
-                    <?= csrf_field() ?>
-
-                    <!-- Email -->
-                    <div class="form-floating mb-2">
-                        <input type="email" class="form-control" id="floatingEmailInput" name="email" inputmode="email" autocomplete="email" placeholder="<?= lang('Auth.email') ?>" value="<?= old('email') ?>" required>
-                        <label for="floatingEmailInput"><?= lang('Auth.email') ?></label>
-                    </div>
-
-                    <!-- Username -->
-                    <div class="form-floating mb-4">
-                        <input type="text" class="form-control" id="floatingUsernameInput" name="username" inputmode="text" autocomplete="username" placeholder="<?= lang('Auth.username') ?>" value="<?= old('username') ?>" required>
-                        <label for="floatingUsernameInput"><?= lang('Auth.username') ?></label>
-                    </div>
-
-                    <!-- Password -->
-                    <div class="form-floating mb-2">
-                        <input type="password" class="form-control" id="floatingPasswordInput" name="password" inputmode="text" autocomplete="new-password" placeholder="<?= lang('Auth.password') ?>" required>
-                        <label for="floatingPasswordInput"><?= lang('Auth.password') ?></label>
-                    </div>
-
-                    <!-- Password (Again) -->
-                    <div class="form-floating mb-5">
-                        <input type="password" class="form-control" id="floatingPasswordConfirmInput" name="password_confirm" inputmode="text" autocomplete="new-password" placeholder="<?= lang('Auth.passwordConfirm') ?>" required>
-                        <label for="floatingPasswordConfirmInput"><?= lang('Auth.passwordConfirm') ?></label>
-                    </div>
-
-                    <div class="d-grid col-12 col-md-8 mx-auto m-3">
-                        <button type="submit" class="btn btn-primary btn-block"><?= lang('Auth.register') ?></button>
-                    </div>
-
-                    <p class="text-center"><?= lang('Auth.haveAccount') ?> <a href="<?= url_to('login') ?>"><?= lang('Auth.login') ?></a></p>
-
-                </form>
+        <div class="login-form">
+            <!-- Logo -->
+            <div class="logo-login">
+                <a href="<?= base_url() ?>">
+                    <img src="<?= base_url('public/assets/img/logo/loder.png') ?>" alt="Logo">
+                </a>
             </div>
+            
+            <h2>Registration Here</h2>
+
+            <!-- Error Messages -->
+            <?php if (session('error')) : ?>
+                <div class="alert alert-danger"><?= esc(session('error')) ?></div>
+            <?php elseif (session('errors')) : ?>
+                <div class="alert alert-danger">
+                    <?php foreach (session('errors') as $error) : ?>
+                        <?= esc($error) ?><br>
+                    <?php endforeach ?>
+                </div>
+            <?php endif ?>
+
+            <!-- Full Name -->
+            <div class="form-input">
+                <label for="name">Full Name</label>
+                <input type="text" name="name" placeholder="Full Name" value="<?= old('name') ?>" required>
+            </div>
+
+            <!-- Email -->
+            <div class="form-input">
+                <label for="email">Email</label>
+                <input type="email" name="email" placeholder="Email" value="<?= old('email') ?>" required>
+            </div>
+
+            <!-- Password -->
+            <div class="form-input">
+                <label for="password">Password</label>
+                <input type="password" name="password" placeholder="Password" required>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-input">
+                <label for="password_confirm">Confirm Password</label>
+                <input type="password" name="password_confirm" placeholder="Confirm Password" required>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-input pt-30">
+                <input type="submit" name="submit" value="Register">
+            </div>
+
+            <!-- Login Link -->
+            <a href="<?= url_to('login') ?>" class="registration">Login</a>
         </div>
-    </div>
+    </form>
+    <!-- /End Registration Form -->
+</main>
 
 <?= $this->endSection() ?>

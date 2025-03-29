@@ -2,7 +2,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Courses | Education</title>
+    <title>Learn Affix | Courses | Education</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -49,7 +49,7 @@
                             <!-- Logo -->
                             <div class="col-xl-2 col-lg-2">
                                 <div class="logo">
-                                    <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+                                    <a href="<?php echo base_url('/') ?>"><img src="<?php echo base_url('public/assets/img/logo/logo.png') ?>" alt=""></a>
                                 </div>
                             </div>
                             <div class="col-xl-10 col-lg-10">
@@ -58,7 +58,7 @@
                                     <div class="main-menu d-none d-lg-block">
                                         <nav>
                                             <ul id="navigation">                                                                                          
-                                                <li class="active" ><a href="index.html">Home</a></li>
+                                                <li class="active" ><a href="<?php echo base_url('/'); ?>">Home</a></li>
                                                 <li><a href="courses.html">Courses</a></li>
                                                 <li><a href="about.html">About</a></li>
                                                 <li><a href="#">Blog</a>

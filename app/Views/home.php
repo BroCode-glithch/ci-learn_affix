@@ -15,7 +15,7 @@
                     </div>          
                 </div>
             </div>
-        </section>
+</section>
         <!-- ? services-area -->
         <div class="services-area">
             <div class="container">
@@ -56,151 +56,86 @@
                 </div>
             </div>
         </div>
-        <!-- Courses area start -->
+
+        <!-- Courses Area Start -->
         <div class="courses-area section-padding40 fix">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-xl-7 col-lg-8">
                         <div class="section-tittle text-center mb-55">
-                            <h2>Our featured courses</h2>
+                            <h2>Our Featured Courses</h2>
                         </div>
                     </div>
                 </div>
-                <div class="courses-actives">
-                    <!-- Single -->
-                    <div class="properties pb-20">
-                        <div class="properties__card">
-                            <div class="properties__img overlay1">
-                                <a href="#"><img src="assets/img/gallery/featured1.png" alt=""></a>
-                            </div>
-                            <div class="properties__caption">
-                                <p>User Experience</p>
-                                <h3><a href="#">Fundamental of UX for Application design</a></h3>
-                                <p>The automated process all your website tasks. Discover tools and techniques to engage effectively with vulnerable children and young people.
-
-                                </p>
-                                <div class="properties__footer d-flex justify-content-between align-items-center">
-                                    <div class="restaurant-name">
-                                        <div class="rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half"></i>
+                <div class="row">
+                    <!-- Loop through courses -->
+                    <?php if (!empty($courses_data)) : ?>
+                        <?php foreach ($courses_data as $course) : ?>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="properties pb-20">
+                                    <div class="properties__card">
+                                        <div class="properties__img overlay1">
+                                            <a href="#">
+                                                <img src="<?php echo base_url('public/assets/img/gallery/' . $course['image']); ?>" 
+                                                    alt="<?php echo htmlspecialchars($course['title']); ?>">
+                                            </a>
                                         </div>
-                                        <p><span>(4.5)</span> based on 120</p>
-                                    </div>
-                                    <div class="price">
-                                        <span>$135</span>
+                                        <div class="properties__caption">
+                                            <p><?php echo htmlspecialchars($course['category']); ?></p>
+                                            <h3><a href="#"><?php echo htmlspecialchars($course['title']); ?></a></h3>
+                                            <p>
+                                                <?php 
+                                                    $words = explode(" ", $course['description']); 
+                                                    $wordLimit = 10;
+                                                    if (count($words) > $wordLimit) {
+                                                        echo htmlspecialchars(implode(" ", array_slice($words, 0, $wordLimit))) . '...';
+                                                    } else {
+                                                        echo htmlspecialchars($course['description']);
+                                                    }
+                                                ?>
+                                            </p>
+                                            <div class="properties__footer d-flex justify-content-between align-items-center">
+                                                <div class="restaurant-name">
+                                                    <div class="rating">
+                                                        <?php 
+                                                        $rating = round($course['rating'] * 2) / 2;
+                                                        $fullStars = floor($rating);
+                                                        $halfStar = ($rating - $fullStars) == 0.5;
+                                                        $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0);
+
+                                                        for ($i = 0; $i < $fullStars; $i++) {
+                                                            echo '<i class="fas fa-star"></i>';
+                                                        }
+                                                        if ($halfStar) {
+                                                            echo '<i class="fas fa-star-half-alt"></i>';
+                                                        }
+                                                        for ($i = 0; $i < $emptyStars; $i++) {
+                                                            echo '<i class="far fa-star"></i>';
+                                                        }
+                                                        ?>
+                                                    </div>
+                                                    <p><span>(<?php echo $rating; ?>)</span> based on <?php echo intval($course['reviews']); ?> reviews</p>
+                                                </div>
+                                                <div class="price">
+                                                    <span>$<?php echo number_format($course['price'], 2); ?></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a href="<?php echo base_url('course/' . $course['id']); ?>" class="border-btn border-btn2">
+                                            Explore Course
+                                        </a>                                    
                                     </div>
                                 </div>
-                                <a href="#" class="border-btn border-btn2">Find out more</a>
                             </div>
-
-                        </div>
-                    </div>
-                    <!-- Single -->
-                    <!-- Single -->
-                    <div class="properties pb-20">
-                        <div class="properties__card">
-                            <div class="properties__img overlay1">
-                                <a href="#"><img src="assets/img/gallery/featured2.png" alt=""></a>
-                            </div>
-                            <div class="properties__caption">
-                                <p>User Experience</p>
-                                <h3><a href="#">Fundamental of UX for Application design</a></h3>
-                                <p>The automated process all your website tasks. Discover tools and techniques to engage effectively with vulnerable children and young people.
-                                </p>
-                                <div class="properties__footer d-flex justify-content-between align-items-center">
-                                    <div class="restaurant-name">
-                                        <div class="rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half"></i>
-                                        </div>
-                                        <p><span>(4.5)</span> based on 120</p>
-                                    </div>
-                                    <div class="price">
-                                        <span>$135</span>
-                                    </div>
-                                </div>
-                                <a href="#" class="border-btn border-btn2">Find out more</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Single -->
-                    <!-- Single -->
-                    <div class="properties pb-20">
-                        <div class="properties__card">
-                            <div class="properties__img overlay1">
-                                <a href="#"><img src="assets/img/gallery/featured3.png" alt=""></a>
-                            </div>
-                            <div class="properties__caption">
-                                <p>User Experience</p>
-                                <h3><a href="#">Fundamental of UX for Application design</a></h3>
-                                <p>The automated process all your website tasks. Discover tools and techniques to engage effectively with vulnerable children and young people.
-
-                                </p>
-                                <div class="properties__footer d-flex justify-content-between align-items-center">
-                                    <div class="restaurant-name">
-                                        <div class="rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half"></i>
-                                        </div>
-                                        <p><span>(4.5)</span> based on 120</p>
-                                    </div>
-                                    <div class="price">
-                                        <span>$135</span>
-                                    </div>
-                                </div>
-                                <a href="#" class="border-btn border-btn2">Find out more</a>
-                            </div>
-
-                        </div>
-                    </div>
-                    <!-- Single -->
-                    <!-- Single -->
-                    <div class="properties pb-20">
-                        <div class="properties__card">
-                            <div class="properties__img overlay1">
-                                <a href="#"><img src="assets/img/gallery/featured2.png" alt=""></a>
-                            </div>
-                            <div class="properties__caption">
-                                <p>User Experience</p>
-                                <h3><a href="#">Fundamental of UX for Application design</a></h3>
-                                <p>The automated process all your website tasks. Discover tools and techniques to engage effectively with vulnerable children and young people.
-
-                                </p>
-                                <div class="properties__footer d-flex justify-content-between align-items-center">
-                                    <div class="restaurant-name">
-                                        <div class="rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half"></i>
-                                        </div>
-                                        <p><span>(4.5)</span> based on 120</p>
-                                    </div>
-                                    <div class="price">
-                                        <span>$135</span>
-                                    </div>
-                                </div>
-                                <a href="#" class="border-btn border-btn2">Find out more</a>
-                            </div>
-
-                        </div>
-                    </div>
-                    <!-- Single -->
+                        <?php endforeach; ?>
+                    <?php else : ?>
+                        <p class="text-center">No courses available at the moment.</p>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
-        <!-- Courses area End -->
+        <!-- Courses Area End -->
+
         <!--? About Area-1 Start -->
         <section class="about-area1 fix pt-10">
             <div class="support-wrapper align-items-center">
