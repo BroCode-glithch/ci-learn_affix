@@ -23,19 +23,21 @@ class CourseController extends BaseController
     public function category($category)
     {
         helper('text'); // ✅ Load the text helper to enable word_limiter()
-        
+    
         $courseModel = new Courses();
     
         // Decode category name from URL
         $category = urldecode($category);
     
-        // Fetch courses based on category
-        $data['courses'] = $courseModel->where('category', $category)->findAll();
+        // Fetch courses based on category with correct chaining
+        $data['courses'] = $courseModel->where('category', $category)
+                                       ->orderBy('id', 'DESC')
+                                       ->findAll();
+        
         $data['category_name'] = $category;
     
         return view("courses/course-category", $data);
-    }
-    
+    }    
     
     public function show($id)
     {
