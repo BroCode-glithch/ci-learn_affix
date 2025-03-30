@@ -1,23 +1,20 @@
 # Use an official PHP runtime as a parent image
-FROM php:8.2-apache
-
-# Install required extensions
-RUN docker-php-ext-install pdo pdo_mysql
+FROM php:8.1-apache
 
 # Enable mod_rewrite for CodeIgniter
 RUN a2enmod rewrite
 
-# Copy the project files into the container
-COPY . /var/www/html/
+# Set the working directory in the container
+WORKDIR /var/www/html
 
-# Set the working directory
-WORKDIR /var/www/html/
+# Copy the application code into the container
+COPY . /var/www/html
 
-# Set permissions
+# Set file permissions
 RUN chown -R www-data:www-data /var/www/html
 
 # Expose port 80
 EXPOSE 80
 
-# Start Apache server
+# Start Apache in the foreground
 CMD ["apache2-foreground"]
