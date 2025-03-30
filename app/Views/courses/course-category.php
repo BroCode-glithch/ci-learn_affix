@@ -119,17 +119,15 @@
     $(document).ready(function(){
         $('.slider-active').slick({
             autoplay: true,
-            autoplaySpeed: 2000, // Faster: Changes every 2 seconds
-            arrows: false,
-            fade: true,
-            dots: false,
-            speed: 300, // Faster transition effect (300ms)
-            pauseOnHover: false,
-            cssEase: 'linear' // Ensures smooth transitions
+            autoplaySpeed: 5000, // Change slide every 5 seconds
+            arrows: false, // No navigation arrows
+            fade: true, // Smooth fade effect
+            dots: false, // No pagination dots
+            infinite: true, // Ensures the slider loops all images
+            speed: 1000, // Smooth transition speed
+            pauseOnHover: false // Prevents pausing when hovered
         });
     });
 </script>
-
-
 
 <?= $this->endSection() ?>
