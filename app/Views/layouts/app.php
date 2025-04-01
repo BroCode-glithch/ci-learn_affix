@@ -23,10 +23,75 @@
     <link rel="stylesheet" href="<?= base_url('public/assets/css/slick.css'); ?>">
     <link rel="stylesheet" href="<?= base_url('public/assets/css/nice-select.css'); ?>">
     <link rel="stylesheet" href="<?= base_url('public/assets/css/style.css'); ?>">
+
+    <style>
+        .toast-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+    }
+
+    .toast {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 20px;
+        min-width: 250px;
+        max-width: 350px;
+        background-color: #333;
+        color: white;
+        border-radius: 5px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        margin-bottom: 10px;
+        opacity: 1;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    .toast-success {
+        background-color: #28a745; /* Green */
+    }
+
+    .toast-error {
+        background-color: #dc3545; /* Red */
+    }
+
+    .close-toast {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 18px;
+        cursor: pointer;
+        margin-left: 10px;
+    }
+
+    </style>
+
+    <!-- Bootstrap JavaScript (if not already included) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
     
 </head>
 
 <body>
+    <!-- Flash Message Container -->
+    <div class="toast-container">
+        <?php if (session()->getFlashdata('success')) : ?>
+            <div class="toast toast-success">
+                <span><?= session()->getFlashdata('success'); ?></span>
+                <button class="close-toast">&times;</button>
+            </div>
+        <?php endif; ?>
+
+        <?php if (session()->getFlashdata('error')) : ?>
+            <div class="toast toast-error">
+                <span><?= session()->getFlashdata('error'); ?></span>
+                <button class="close-toast">&times;</button>
+            </div>
+        <?php endif; ?>
+    </div>
+
     <!-- ? Preloader Start -->
     <div id="preloader-active">
         <div class="preloader d-flex align-items-center justify-content-center">
@@ -60,7 +125,7 @@
                                             <ul id="navigation">                                                                                          
                                                 <li class="active" ><a href="<?php echo base_url('/'); ?>">Home</a></li>
                                                 <li><a href="<?= base_url('courses') ?>">Courses</a></li>
-                                                <li><a href="about.html">About</a></li>
+                                                <li><a href="<?= base_url('about') ?>">About</a></li>
                                                 <li><a href="#">Blog</a>
                                                     <ul class="submenu">
                                                         <li><a href="blog.html">Blog</a></li>
@@ -242,6 +307,27 @@
         <!-- Jquery Plugins, main Jquery -->	
         <script src="<?= base_url('public/assets/js/plugins.js'); ?>"></script>
         <script src="<?= base_url('public/assets/js/main.js'); ?>"></script>
+        
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Auto-hide after 5 seconds
+                setTimeout(function () {
+                    document.querySelectorAll(".toast").forEach(function (toast) {
+                        toast.style.opacity = "0";
+                        setTimeout(() => toast.remove(), 500);
+                    });
+                }, 5000);
+
+                // Close toast when clicking the button
+                document.querySelectorAll(".close-toast").forEach(function (btn) {
+                    btn.addEventListener("click", function () {
+                        let toast = this.parentElement;
+                        toast.style.opacity = "0";
+                        setTimeout(() => toast.remove(), 500);
+                    });
+                });
+            });
+        </script>
 
     </body>
 </html>

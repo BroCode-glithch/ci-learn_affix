@@ -13,7 +13,7 @@ class Courses extends Model
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'id','image','category','title','description','rating','price', 'user_id', 'reviews', '',
+        'id','image','category','title','description','rating','price', 'user_id', 'reviews', 'is_featured', 'topic_id'
     ];
 
     protected bool $allowEmptyInserts = false;

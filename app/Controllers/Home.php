@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\Courses\Courses;
+use App\Models\About\About;
 
 class Home extends BaseController
 {
@@ -9,10 +10,16 @@ class Home extends BaseController
     {
         $courses = new Courses();
 
-        // Fetch 2 courses from the database
+        // Fetch courses from the database
         $data['courses_data'] = $courses->orderBy('id', 'DESC')->findAll();  
 
-        // Pass the data to the layout
+        // Fetch distinct categories with images
+        $data['categories'] = $courses->select('DISTINCT(category), image')->findAll();
+
+        $aboutModel = new About();
+        $data['about'] = $aboutModel->first();
+
+        // Pass data to the view
         return view('home', $data);
     }
 }

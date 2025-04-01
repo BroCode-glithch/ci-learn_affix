@@ -88,7 +88,7 @@
                                         </div>
                                         <div class="properties__caption">
                                             <p><?php echo htmlspecialchars($course['category']); ?></p>
-                                            <h3><a href="#"><?php echo htmlspecialchars($course['title']); ?></a></h3>
+                                            <h3><a href="<?= base_url('course/' . $course['id']); ?>"><?php echo htmlspecialchars($course['title']); ?></a></h3>
                                             <p>
                                                 <?php 
                                                     $words = explode(" ", $course['description']); 
@@ -141,180 +141,103 @@
             </div>
         </div>
         <!-- Courses Area End -->
-
         <!--? About Area-1 Start -->
         <section class="about-area1 fix pt-10">
             <div class="support-wrapper align-items-center">
                 <div class="left-content1">
                     <div class="about-icon">
-                        <img src="assets/img/icon/about.svg" alt="">
+                        <img src="<?= base_url('public/assets/img/icon/about.svg'); ?>" alt="">
                     </div>
-                    <!-- section tittle -->
+                    <!-- section title -->
                     <div class="section-tittle section-tittle2 mb-55">
                         <div class="front-text">
-                            <h2 class="">Learn new skills online with top educators</h2>
-                            <p>The automated process all your website tasks. Discover tools and 
-                                techniques to engage effectively with vulnerable children and young 
-                            people.</p>
+                            <h2 class=""><?= esc($about['title']); ?></h2>
+                            <p><?= esc($about['description']); ?></p>
                         </div>
                     </div>
-                    <div class="single-features">
-                        <div class="features-icon">
-                            <img src="assets/img/icon/right-icon.svg" alt="">
-                        </div>
-                        <div class="features-caption">
-                            <p>Techniques to engage effectively with vulnerable children and young people.</p>
-                        </div>
-                    </div>
-                    <div class="single-features">
-                        <div class="features-icon">
-                            <img src="assets/img/icon/right-icon.svg" alt="">
-                        </div>
-                        <div class="features-caption">
-                            <p>Join millions of people from around the world  learning together.</p>
-                        </div>
-                    </div>
-
-                    <div class="single-features">
-                        <div class="features-icon">
-                            <img src="assets/img/icon/right-icon.svg" alt="">
-                        </div>
-                        <div class="features-caption">
-                            <p>Join millions of people from around the world learning together. Online learning is as easy and natural.</p>
-                        </div>
-                    </div>
+        
+                    <!-- Features -->
+                    <?php 
+                    // Ensure the features content is split into an array of paragraphs
+                    $features = is_array($about['features']) ? $about['features'] : explode(PHP_EOL, $about['features']);
+                    
+                    if (!empty($features)): ?>
+                        <?php foreach ($features as $feature): ?>
+                            <div class="single-features">
+                                <div class="features-icon">
+                                    <img src="<?= base_url('public/assets/img/icon/right-icon.svg'); ?>" alt="">
+                                </div>
+                                <div class="features-caption">
+                                    <p><?= esc(trim($feature)); ?></p>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
+        
                 <div class="right-content1">
                     <!-- img -->
                     <div class="right-img">
-                        <img src="assets/img/gallery/about.png" alt="">
-
-                        <div class="video-icon" >
-                            <a class="popup-video btn-icon" href="https://www.youtube.com/watch?v=up68UAfH0d0"><i class="fas fa-play"></i></a>
+                        <img src="<?= base_url('public/assets/img/gallery/' . esc($about['image'])); ?>" alt="About Image">
+                        <div class="video-icon">
+                            <a class="popup-video btn-icon" href="<?= esc($about['video_url']); ?>"><i class="fas fa-play"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <!-- About Area End -->
-        <!--? top subjects Area Start -->
-        <div class="topic-area section-padding40">
+        <!-- About Area End -->              
+        
+        <!-- Top Subjects Area Start -->
+        <div class="topic-area">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-xl-7 col-lg-8">
                         <div class="section-tittle text-center mb-55">
-                            <h2>Explore top subjects</h2>
+                            <h2>Explore Top Subjects</h2>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-3 col-md-4 col-sm-6">
-                        <div class="single-topic text-center mb-30">
-                            <div class="topic-img">
-                                <img src="assets/img/gallery/topic1.png" alt="">
-                                <div class="topic-content-box">
-                                    <div class="topic-content">
-                                        <h3><a href="#">Programing</a></h3>
+                    <?php if (!empty($categories)) : ?>
+                        <?php foreach ($categories as $category) : ?>
+                            <div class="col-lg-3 col-md-4 col-sm-6">
+                                <div class="single-topic text-center mb-30">
+                                    <div class="topic-img">
+                                        <img src="<?= base_url('public/assets/img/gallery/' . esc($category['image'])); ?>" 
+                                             alt="<?= esc($category['category']); ?>"
+                                             onerror="this.src='<?= base_url('public/assets/img/placeholder.jpg'); ?>';">
+                                        <div class="topic-content-box">
+                                            <div class="topic-content">
+                                                <h3>
+                                                    <a href="<?= base_url('courses/course-category/' . urlencode($category['category'])); ?>">
+                                                        <?= esc($category['category']); ?>
+                                                    </a>
+                                                </h3>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-sm-6">
-                        <div class="single-topic text-center mb-30">
-                            <div class="topic-img">
-                                <img src="assets/img/gallery/topic2.png" alt="">
-                                <div class="topic-content-box">
-                                    <div class="topic-content">
-                                        <h3><a href="#">Programing</a></h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-sm-6">
-                        <div class="single-topic text-center mb-30">
-                            <div class="topic-img">
-                                <img src="assets/img/gallery/topic3.png" alt="">
-                                <div class="topic-content-box">
-                                    <div class="topic-content">
-                                        <h3><a href="#">Programing</a></h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-sm-6">
-                        <div class="single-topic text-center mb-30">
-                            <div class="topic-img">
-                                <img src="assets/img/gallery/topic4.png" alt="">
-                                <div class="topic-content-box">
-                                    <div class="topic-content">
-                                        <h3><a href="#">Programing</a></h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-sm-6">
-                        <div class="single-topic text-center mb-30">
-                            <div class="topic-img">
-                                <img src="assets/img/gallery/topic5.png" alt="">
-                                <div class="topic-content-box">
-                                    <div class="topic-content">
-                                        <h3><a href="#">Programing</a></h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-sm-6">
-                        <div class="single-topic text-center mb-30">
-                            <div class="topic-img">
-                                <img src="assets/img/gallery/topic6.png" alt="">
-                                <div class="topic-content-box">
-                                    <div class="topic-content">
-                                        <h3><a href="#">Programing</a></h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-sm-6">
-                        <div class="single-topic text-center mb-30">
-                            <div class="topic-img">
-                                <img src="assets/img/gallery/topic7.png" alt="">
-                                <div class="topic-content-box">
-                                    <div class="topic-content">
-                                        <h3><a href="#">Programing</a></h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-sm-6">
-                        <div class="single-topic text-center mb-30">
-                            <div class="topic-img">
-                                <img src="assets/img/gallery/topic8.png" alt="">
-                                <div class="topic-content-box">
-                                    <div class="topic-content">
-                                        <h3><a href="#">Programing</a></h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <?php endforeach; ?>
+                    <?php else : ?>
+                        <p class="text-center">No categories available.</p>
+                    <?php endif; ?>
                 </div>
+        
+                <!-- View More Subjects Button -->
                 <div class="row justify-content-center">
                     <div class="col-xl-12">
                         <div class="section-tittle text-center mt-20">
-                            <a href="courses.html" class="border-btn">View More Subjects</a>
+                            <button class="border-btn" data-toggle="modal" data-target="#categoriesModal">View More Subjects</button>
                         </div>
                     </div>
                 </div>
+        
             </div>
         </div>
-        <!-- top subjects End -->
+        <!-- Top Subjects End -->
+        
         <!--? About Area-3 Start -->
         <section class="about-area3 fix">
             <div class="support-wrapper align-items-center">

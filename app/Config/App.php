@@ -16,7 +16,7 @@ class App extends BaseConfig
      *
      * E.g., http://example.com/
      */
-    public string $baseURL = 'https://learnaffix.vercel.app/';
+    public string $baseURL = 'http://127.0.0.1/ci-learn_affix/';
 
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.

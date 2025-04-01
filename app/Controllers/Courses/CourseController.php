@@ -12,11 +12,19 @@ class CourseController extends BaseController
     public function index()
     {
         $courseModel = new Courses();
-
+    
         // Fetch distinct categories
         $data['categories'] = $courseModel->select('DISTINCT(category)')->findAll();
-        $data['courses'] = $courseModel->findAll(); // Fetch all courses
-
+    
+        // Fetch distinct topics
+        // $data['topics'] = $courseModel->getTopics();
+    
+        // Fetch all courses
+        $data['courses'] = $courseModel->orderBy('id', 'DESC')->findAll(); 
+    
+        // Fetch featured (highlighted) courses
+        $data['highlighted_courses'] = $courseModel->where('is_featured', 1)->orderBy('id', 'DESC')->findAll(6);
+    
         return view("courses/course", $data);
     }
 
@@ -59,4 +67,21 @@ class CourseController extends BaseController
             'other_courses' => $other_courses
         ]);
     }
+
+    public function coursePage()
+    {
+        $model = new Courses();
+        
+        // Fetch all categories
+        $data['categories'] = $model->select('DISTINCT(category)', false)->findAll();
+    
+        // Fetch featured courses correctly
+        $data['highlighted_courses'] = $model->where('is_featured', 1)->orderBy('id', 'DESC')->findAll(6);
+    
+        // Debugging: Uncomment to check the fetched courses
+        dd($data['highlighted_courses']); 
+    
+        return view('courses/course', $data);
+    }     
+    
 }
