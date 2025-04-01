@@ -14,7 +14,7 @@ class Home extends BaseController
         $data['courses_data'] = $courses->orderBy('id', 'DESC')->findAll();  
 
         // Fetch distinct categories with images
-        $data['categories'] = $courses->select('DISTINCT(category), image')->findAll();
+        $data['categories'] = $courses->select('DISTINCT(category), image')->findAll(3);
 
         $aboutModel = new About();
         $data['about'] = $aboutModel->first();

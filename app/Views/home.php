@@ -201,7 +201,7 @@
                 <div class="row">
                     <?php if (!empty($categories)) : ?>
                         <?php foreach ($categories as $category) : ?>
-                            <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="single-topic text-center mb-30">
                                     <div class="topic-img">
                                         <img src="<?= base_url('public/assets/img/gallery/' . esc($category['image'])); ?>" 
@@ -224,19 +224,20 @@
                         <p class="text-center">No categories available.</p>
                     <?php endif; ?>
                 </div>
-        
+            
                 <!-- View More Subjects Button -->
                 <div class="row justify-content-center">
                     <div class="col-xl-12">
                         <div class="section-tittle text-center mt-20">
-                            <button class="border-btn" data-toggle="modal" data-target="#categoriesModal">View More Subjects</button>
+                            <a href="<?= base_url('courses/all-categories'); ?>" class="border-btn">View More Subjects</a>
                         </div>
                     </div>
                 </div>
-        
+            
             </div>
         </div>
         <!-- Top Subjects End -->
+        
         
         <!--? About Area-3 Start -->
         <section class="about-area3 fix">

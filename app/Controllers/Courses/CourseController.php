@@ -46,6 +46,18 @@ class CourseController extends BaseController
     
         return view("courses/course-category", $data);
     }    
+
+    public function allCategories()
+    {
+        // Load the Category model or directly fetch categories from the database
+        $categoryModel = new Courses();  // Example of a model for categories
+        
+        // Fetch all categories
+        $data['categories'] = $categoryModel->findAll();
+
+        // Return a view that displays all the categories
+        return view('courses/all-categories', $data);  // Ensure you have a view for all categories
+    }
     
     public function show($id)
     {

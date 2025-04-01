@@ -18,4 +18,4 @@ $routes->get('courses/course-category/(:any)', 'Courses\CourseController::catego
 $routes->get('courses/categories', 'Courses\CourseController::categories');
 
 $routes->get('/about', 'About\AboutController::index');
-
+$routes->get('courses/all-categories', 'Courses\CourseController::allCategories');
