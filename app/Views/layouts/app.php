@@ -71,7 +71,11 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    
+    <!-- STRIPE -->
+    <!-- <script src="https://js.stripe.com/v3/"></script> -->
+
+
+   
 </head>
 
 <body>
@@ -328,6 +332,34 @@
                 });
             });
         </script>
+
+
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script>
+    var paystackButton = document.getElementById('paystack-button');
+
+    paystackButton.addEventListener('click', function() {
+        var handler = PaystackPop.setup({
+            key: '<?= getenv('PAYSTACK_PUBLIC_KEY') ?>', // Replace with your public key from Paystack dashboard
+            email: 'emmaariyom1@gmail.com', // Replace with user's email
+            amount: <?= isset($course['price']) ? $course['price'] * 100 : 0; ?>, // Amount in kobo (Paystack uses kobo, 100 kobo = 1 Naira)
+            currency: 'NGN', // Currency (in this case, Naira)
+            ref: '<?= uniqid('course_', true); ?>', // Generate a unique reference for the transaction
+            callback: function(response) {
+                // Handle the response when payment is successful
+                alert('Payment successful! Reference: ' + response.reference);
+                window.location.href = '<?= base_url('payment/payment-success'); ?>'; // Redirect to success page
+            },
+            onClose: function() {
+                alert('Transaction was not completed. Please try again.');
+            }
+        });
+
+        handler.openIframe(); // Open the Paystack iframe for payment
+    });
+</script>
+
+
 
     </body>
 </html>

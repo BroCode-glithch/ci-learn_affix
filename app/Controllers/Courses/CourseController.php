@@ -76,7 +76,8 @@ class CourseController extends BaseController
         // Pass data to the view
         return view('courses/course-details', [
             'course' => $course,
-            'other_courses' => $other_courses
+            'other_courses' => $other_courses,
+            '_course' => $course
         ]);
     }
 

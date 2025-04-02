@@ -5,6 +5,7 @@
 <?= $this->section('content') ?>
 
 <?php
+
 function word_limiter_custom($text, $limit = 25, $end = '...')
 {
     $words = explode(' ', $text);
@@ -99,9 +100,15 @@ function word_limiter_custom($text, $limit = 25, $end = '...')
                     <div class="course-price mt-3">
                         <h3>Price: <span class="text-primary">$<?= number_format($course['price'], 2); ?></span></h3>
                     </div>
-
-                    <!-- Enroll Button -->
-                    <a href="#" class="btn btn-primary mt-4">Enroll Now</a>
+                    <?php if (isset(auth()->user()->username)) : ?>
+                        <a href="<?= base_url('checkout') ?>?course_id=<?= $course['id'] ?>" class="btn btn-primary mt-4">
+                            Enroll Now
+                        </a>
+                    <?php else : ?>
+                        <a href="<?= base_url('login') ?>" class="btn btn-danger mt-4">
+                            Login to Enroll
+                        </a>
+                    <?php endif; ?>                                      
                 </div>
             </div>
 
