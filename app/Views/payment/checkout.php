@@ -4,9 +4,8 @@
 
 <?= $this->section('main') ?>
 
-
 <main class="checkout-body" data-vide-bg="<?php echo base_url('public/assets/img/login-bg.mp4') ?>">
-    <form class="form-default" action="<?= base_url('payment/process') ?>" method="POST">
+    <form class="form-default" id="payment-form" action="<?= base_url('payment/paystack') ?>" method="POST">
         <input type="hidden" name="course_id" value="<?= $course['id'] ?>">
 
         <div class="checkout-form">
@@ -41,7 +40,8 @@
             </div>
 
             <div class="form-input pt-30">
-                <button type="submit" class="btn btn-primary w-100">Proceed to Payment</button>
+                <!-- Paystack Button -->
+                <button id="paystack-button" type="submit" class="btn btn-primary w-100">Proceed to Payment</button>
             </div>
 
             <!-- Back to Courses -->
@@ -61,7 +61,6 @@
         background-size: cover;
         background-position: center;
         z-index: 1;
-        /* Ensure it has a z-index */
     }
 
     .checkout-body::after {
@@ -73,7 +72,6 @@
         height: 100%;
         background: rgba(0, 0, 0, 0.6);
         z-index: 2;
-        /* Ensure the overlay has a z-index */
     }
 
     .checkout-form {
@@ -84,9 +82,7 @@
         width: 400px;
         text-align: center;
         z-index: 3;
-        /* Ensure the form has the highest z-index */
     }
-
 
     .checkout-form h2 {
         margin-bottom: 20px;

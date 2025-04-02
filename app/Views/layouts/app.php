@@ -334,14 +334,14 @@
         </script>
 
 
-<script src="https://js.paystack.co/v1/inline.js"></script>
+<!-- <script src="https://js.paystack.co/v1/inline.js"></script>
 <script>
     var paystackButton = document.getElementById('paystack-button');
 
     paystackButton.addEventListener('click', function() {
         var handler = PaystackPop.setup({
             key: '<?= getenv('PAYSTACK_PUBLIC_KEY') ?>', // Replace with your public key from Paystack dashboard
-            email: 'emmaariyom1@gmail.com', // Replace with user's email
+            email: '<?= isset(auth()->user()->email); ?>', // Replace with user's email
             amount: <?= isset($course['price']) ? $course['price'] * 100 : 0; ?>, // Amount in kobo (Paystack uses kobo, 100 kobo = 1 Naira)
             currency: 'NGN', // Currency (in this case, Naira)
             ref: '<?= uniqid('course_', true); ?>', // Generate a unique reference for the transaction
@@ -357,8 +357,62 @@
 
         handler.openIframe(); // Open the Paystack iframe for payment
     });
-</script>
+</script> -->
 
+<!-- Include Paystack JS -->
+<script src="https://js.paystack.co/v1/inline.js"></script>
+
+<!-- Payment Button -->
+// <button id="paystack-button">Proceed to Payment</button>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const paystackButton = document.getElementById('paystack-button');
+        
+        if (!paystackButton) {
+            console.error('Paystack button not found.');
+            return;
+        }
+
+        paystackButton.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Ensure the courseId input exists and has a value
+            const courseIdInput = document.querySelector('input[name="course_id"]');
+            if (!courseIdInput || !courseIdInput.value) {
+                alert('Course ID is missing or invalid.');
+                return;
+            }
+
+            const courseId = courseIdInput.value;
+
+            fetch('<?= base_url('/payment/paystack') ?>', {
+                method: 'POST',
+                body: new URLSearchParams({
+                    course_id: courseId
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to initiate payment, server responded with an error.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.status) {
+                    // Redirect to Paystack for payment
+                    window.location.href = data.authorization_url; 
+                } else {
+                    // If there was an issue, show an alert with the error message
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while processing your payment. Please try again.');
+            });
+        });
+    });
+</script>
 
 
     </body>

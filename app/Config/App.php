@@ -19,6 +19,7 @@ class App extends BaseConfig
     public string $baseURL = 'http://127.0.0.1/ci-learn_affix/';
 
     /**
+     * --------------------------------------------------------------------------
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.
      * If you want to accept multiple Hostnames, set this.
      *
@@ -81,7 +82,7 @@ class App extends BaseConfig
     | DO NOT CHANGE THIS UNLESS YOU FULLY UNDERSTAND THE REPERCUSSIONS!!
     |
     */
-    public string $permittedURIChars = 'a-z 0-9~%.:_\-';
+    public string $permittedURIChars = 'a-z 0-9~%.:_\-' ;
 
     /**
      * --------------------------------------------------------------------------
@@ -169,15 +170,6 @@ class App extends BaseConfig
      * X-Forwarded-For or Client-IP in order to properly identify
      * the visitor's IP address.
      *
-     * You need to set a proxy IP address or IP address with subnets and
-     * the HTTP header for the client IP address.
-     *
-     * Here are some examples:
-     *     [
-     *         '10.0.1.200'     => 'X-Forwarded-For',
-     *         '192.168.5.0/24' => 'X-Real-IP',
-     *     ]
-     *
      * @var array<string, string>
      */
     public array $proxyIPs = [];
@@ -193,12 +185,28 @@ class App extends BaseConfig
      * `ContentSecurityPolicy.php` file. Controllers can always add to those
      * restrictions at run time.
      *
-     * For a better understanding of CSP, see these documents:
-     *
      * @see http://www.html5rocks.com/en/tutorials/security/content-security-policy/
-     * @see http://www.w3.org/TR/CSP/
      */
     public bool $CSPEnabled = false;
 
-    public $dotenv = true;
+    /**
+     * --------------------------------------------------------------------------
+     * Paystack Secret Key Configuration
+     * --------------------------------------------------------------------------
+     * 
+     * Paystack Secret Key is set here to allow you to easily manage it
+     * in your configuration file.
+     */
+    public string $paystackSecretKey = 'sk_test_ffcad09009c424fa04fc2e3cf50eccbcdb0d351b'; // Make sure to keep this private
+
+    /**
+     * --------------------------------------------------------------------------
+     * Environment Variables
+     * --------------------------------------------------------------------------
+     *
+     * Enable dotenv to load environment variables from .env file.
+     * This is useful for local development, and it will load the values
+     * in your .env file (like PAYSTACK_SECRET_KEY) if available.
+     */
+    public bool $dotenv = true;
 }

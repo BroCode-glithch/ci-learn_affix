@@ -95,6 +95,5 @@ class CourseController extends BaseController
         dd($data['highlighted_courses']); 
     
         return view('courses/course', $data);
-    }     
-    
+    }   
 }

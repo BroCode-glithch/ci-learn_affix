@@ -49,5 +49,8 @@ $routes->post('payment/process', 'Payment\CoursePayment::processPayment'); // âœ
 $routes->post('payment/coursepayment/pay', 'Payment\CoursePayment::pay');
 $routes->get('payment/coursepayment/callback', 'Payment\CoursePayment::callback');
 // Route to handle Paystack integration
-$routes->get('payment/paystack', 'Payment\CoursePayment::paystack');
+$routes->post('/payment/paystack', 'Payment\CoursePayment::paystack');
+// For PayPal (if needed)
+$routes->get('/payment/paypal', 'Payment\CoursePayment::paypal');
+$routes->get('payment/callback', 'Payment\CoursePayment::callback');
 
