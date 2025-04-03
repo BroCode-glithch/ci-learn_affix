@@ -132,7 +132,7 @@
                                                 <li><a href="<?= base_url('about') ?>">About</a></li>
                                                 <li><a href="#">Blog</a>
                                                     <ul class="submenu">
-                                                        <li><a href="blog.html">Blog</a></li>
+                                                        <li><a href="<?= base_url('blog') ?>">Blog</a></li>
                                                         <li><a href="blog_details.html">Blog Details</a></li>
                                                         <li><a href="elements.html">Element</a></li>
                                                     </ul>
@@ -147,8 +147,8 @@
                                                     <?php echo auth()->user()->username; ?>
                                                 </a>
                                                     <ul class="submenu">
-                                                        <!-- <li><a href="blog.html">Profile</a></li>
-                                                        <li><a href="blog_details.html">Account</a></li> -->
+                                                        <li><a href="<?php echo base_url('user/profile') ?>">Profile</a></li>
+                                                        <!--<li><a href="blog_details.html">Account</a></li> -->
                                                         <li><a href="<?php echo base_url('logout') ?>">Logout</a></li>
                                                     </ul>
                                                 </li>

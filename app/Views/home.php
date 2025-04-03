@@ -245,7 +245,7 @@
                 <div class="right-content3">
                     <!-- img -->
                     <div class="right-img">
-                        <img src="assets/img/gallery/about3.png" alt="">
+                        <img src="<?php echo base_url('public/assets/img/gallery/about3.png'); ?>" alt="">
                     </div>
                 </div>
                 <div class="left-content3">
@@ -257,7 +257,7 @@
                     </div>
                     <div class="single-features">
                         <div class="features-icon">
-                            <img src="assets/img/icon/right-icon.svg" alt="">
+                            <img src="<?php echo base_url('public/assets/img/icon/right-icon.svg'); ?>" alt="">
                         </div>
                         <div class="features-caption">
                             <p>Techniques to engage effectively with vulnerable children and young people.</p>
@@ -265,7 +265,7 @@
                     </div>
                     <div class="single-features">
                         <div class="features-icon">
-                            <img src="assets/img/icon/right-icon.svg" alt="">
+                            <img src="<?php echo base_url('public/assets/img/icon/right-icon.svg'); ?>" alt="">
                         </div>
                         <div class="features-caption">
                             <p>Join millions of people from around the world
@@ -274,7 +274,7 @@
                     </div>
                     <div class="single-features">
                         <div class="features-icon">
-                            <img src="assets/img/icon/right-icon.svg" alt="">
+                            <img src="<?php echo base_url('public/assets/img/icon/right-icon.svg'); ?>" alt="">
                         </div>
                         <div class="features-caption">
                             <p>Join millions of people from around the world learning together.
@@ -298,7 +298,7 @@
                 <div class="team-active">
                     <div class="single-cat text-center">
                         <div class="cat-icon">
-                            <img src="assets/img/gallery/team1.png" alt="">
+                            <img src="<?php echo base_url('public/assets/img/gallery/team1.png'); ?>" alt="">
                         </div>
                         <div class="cat-cap">
                             <h5><a href="services.html">Mr. Urela</a></h5>
@@ -307,7 +307,7 @@
                     </div>
                     <div class="single-cat text-center">
                         <div class="cat-icon">
-                            <img src="assets/img/gallery/team2.png" alt="">
+                            <img src="<?php echo base_url('public/assets/img/gallery/team2.png'); ?>" alt="">
                         </div>
                         <div class="cat-cap">
                             <h5><a href="services.html">Mr. Uttom</a></h5>
@@ -316,7 +316,7 @@
                     </div>
                     <div class="single-cat text-center">
                         <div class="cat-icon">
-                            <img src="assets/img/gallery/team3.png" alt="">
+                            <img src="<?php echo base_url('public/assets/img/gallery/team3.png'); ?>" alt="">
                         </div>
                         <div class="cat-cap">
                             <h5><a href="services.html">Mr. Shakil</a></h5>
@@ -325,7 +325,7 @@
                     </div>
                     <div class="single-cat text-center">
                         <div class="cat-icon">
-                            <img src="assets/img/gallery/team4.png" alt="">
+                            <img src="<?php echo base_url('public/assets/img/gallery/team4.png'); ?>" alt="">
                         </div>
                         <div class="cat-cap">
                             <h5><a href="services.html">Mr. Arafat</a></h5>
@@ -334,7 +334,7 @@
                     </div>
                     <div class="single-cat text-center">
                         <div class="cat-icon">
-                            <img src="assets/img/gallery/team3.png" alt="">
+                            <img src="<?php echo base_url('public/assets/img/gallery/team3.png'); ?>" alt="">
                         </div>
                         <div class="cat-cap">
                             <h5><a href="services.html">Mr. saiful</a></h5>
@@ -351,7 +351,7 @@
                 <div class="right-content2">
                     <!-- img -->
                     <div class="right-img">
-                        <img src="assets/img/gallery/about2.png" alt="">
+                        <img src="<?php echo base_url('public/assets/img/gallery/about2.png'); ?>" alt="">
                     </div>
                 </div>
                 <div class="left-content2">

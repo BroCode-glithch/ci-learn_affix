@@ -1,6 +1,6 @@
 <?= $this->extend("layouts/master") ?>
 
-<?= $this->section('title') ?><?= lang('Auth.login') ?><?= $this->endSection() ?>
+<?= $this->section('title') ?><?= "Learn AFFix | Course Checkout" ?><?= $this->endSection() ?>
 
 <?= $this->section('main') ?>
 

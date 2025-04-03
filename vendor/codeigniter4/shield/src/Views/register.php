@@ -30,10 +30,10 @@
                 </div>
             <?php endif ?>
 
-            <!-- Full Name -->
+            <!-- User Name -->
             <div class="form-input">
-                <label for="name">Full Name</label>
-                <input type="text" name="name" placeholder="Full Name" value="<?= old('name') ?>" required>
+                <label for="username">User Name</label>
+                <input type="text" name="username" placeholder="User Name" value="<?= old('name') ?>" required>
             </div>
 
             <!-- Email -->

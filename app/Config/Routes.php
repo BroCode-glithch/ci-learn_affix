@@ -3,6 +3,7 @@
 use CodeIgniter\Router\RouteCollection;
 use App\Controllers\Courses\CourseController;
 use App\Controllers\About\AboutController;
+use App\Controllers\Admin\AdminController;
 
 use App\Controllers\Payment\CoursePayment;
 
@@ -53,4 +54,34 @@ $routes->post('/payment/paystack', 'Payment\CoursePayment::paystack');
 // For PayPal (if needed)
 $routes->get('/payment/paypal', 'Payment\CoursePayment::paypal');
 $routes->get('payment/callback', 'Payment\CoursePayment::callback');
+
+$routes->get('/blog', 'Blog\BlogController::index');
+
+
+// Admin
+// $routes->get('/admin/login', 'Admin\AdminController::loginShow');
+// $routes->get('/admin/register', 'Admin\AdminController::registerShow');
+// $routes->get('/admin/dashboard', 'Admin\AdminController::index');
+// $routes->get('/admin/users/', 'Admin\AdminController::user');
+// $routes->get('/admin/settings/', 'Admin\AdminController::settings');
+
+$routes->group('admin', function($routes) {
+    // Admin login
+    $routes->get('login', 'Admin\AdminAuthController::login');
+    $routes->post('login', 'Admin\AdminAuthController::loginPost');
+
+    // Admin registration
+    $routes->get('register', 'Admin\AdminAuthController::register');
+    $routes->post('register', 'Admin\AdminAuthController::registerPost');
+
+    // Admin dashboard
+    $routes->get('dashboard', 'Admin\AdminController::index');
+    
+    // Admin logout
+    $routes->get('logout', 'Admin\AdminAuthController::logout');
+});
+
+$routes->get('user/profile', 'User\UserController::profile');
+$routes->match(['get', 'post'], 'user/edit', 'User\UserController::editProfile');
+
 
