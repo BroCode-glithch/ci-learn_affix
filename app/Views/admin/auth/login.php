@@ -15,11 +15,11 @@
                                     <div class="card-body">
                                         <form method="post" action="<?= base_url('admin/login') ?>">
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
+                                                <input class="form-control" name="email" id="inputEmail" type="email" placeholder="name@example.com" required />
                                                 <label for="inputEmail">Email address</label>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputPassword" type="password" placeholder="Password" />
+                                                <input class="form-control" name="password" id="inputPassword" type="password" placeholder="Password" required />
                                                 <label for="inputPassword">Password</label>
                                             </div>
                                             <div class="form-check mb-3">
@@ -28,12 +28,17 @@
                                             </div>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                                 <a class="small" href="password.html">Forgot Password?</a>
-                                                <a class="btn btn-primary" href="index.html">Login</a>
+                                            </div>
+                                            <div class="mt-4 mb-0">
+                                                <!-- Submit Button -->
+                                                <div class="d-grid">
+                                                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                                                </div>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="register.html">Need an account? Sign up!</a></div>
+                                        <div class="small"><a href="<?php echo base_url('admin/register') ?>">Need an account? Sign up!</a></div>
                                     </div>
                                 </div>
                             </div>
