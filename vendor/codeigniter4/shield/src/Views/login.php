@@ -18,23 +18,26 @@
             <h2>Login Here</h2>
 
             <!-- Session Messages -->
-            <?php if (session('error')) : ?>
-                <div class="alert alert-danger"><?= esc(session('error')) ?></div>
-            <?php elseif (session('errors')) : ?>
-                <div class="alert alert-danger">
-                    <?php if (is_array(session('errors'))) : ?>
-                        <?php foreach (session('errors') as $error) : ?>
-                            <?= esc($error) ?><br>
-                        <?php endforeach ?>
-                    <?php else : ?>
-                        <?= esc(session('errors')) ?>
-                    <?php endif ?>
-                </div>
-            <?php endif ?>
+            <!-- Custom Flash Message Container using Toast -->
+            <div class="toast-container">
+                <?php if (session()->getFlashdata('success')) : ?>
+                    <div class="toast toast-success">
+                        <span><?= session()->getFlashdata('success'); ?></span>
+                        <button class="close-toast">&times;</button>
+                    </div>
+                <?php endif; ?>
 
-            <?php if (session('message')) : ?>
-                <div class="alert alert-success"><?= esc(session('message')) ?></div>
-            <?php endif ?>
+                <?php if (session()->getFlashdata('error')) : ?>
+                    <div class="toast toast-error">
+                        <span><?= session()->getFlashdata('error'); ?></span>
+                        <button class="close-toast">&times;</button>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (session('message')) : ?>
+                    <div class="alert alert-success"><?= esc(session('message')) ?></div>
+                <?php endif ?>
+            </div>
 
             <!-- Email -->
             <div class="form-input">

@@ -65,7 +65,7 @@ $routes->get('/blog', 'Blog\BlogController::index');
 // $routes->get('/admin/users/', 'Admin\AdminController::user');
 // $routes->get('/admin/settings/', 'Admin\AdminController::settings');
 
-$routes->group('admin', function($routes) {
+$routes->group('admin', ['fiter' => 'auth'], function($routes) {
     // Admin login
     $routes->get('login', 'Admin\AdminAuthController::login');
     $routes->post('login', 'Admin\AdminAuthController::loginPost');

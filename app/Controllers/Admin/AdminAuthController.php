@@ -107,45 +107,41 @@ class AdminAuthController extends BaseController
         
     // }
 
-    
     public function loginPost(): RedirectResponse
-    {
-        // Validate here first
-        $rules = $this->getValidationRules();
-    
-        if (! $this->validateData($this->request->getPost(), $rules, [], config('Auth')->DBGroup)) {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
-        }
-    
-        /** @var array $credentials */
-        $credentials             = $this->request->getPost(setting('Auth.validFields')) ?? [];
-        $credentials             = array_filter($credentials);
-        $credentials['password'] = $this->request->getPost('password');
-        // $remember                = (bool) $this->request->getPost('remember');
-    
-        /** @var Session $authenticator */
-        $authenticator = auth('session')->getAuthenticator();
-    
-        // Attempt to login
-        $result = $authenticator->attempt($credentials);
-    
-        if (! $result->isOK()) {
-            return redirect()->route('admin/login')
-                ->withInput()
-                ->with('error', $result->reason());  // Flash error message
-        }
-    
-        // If an action has been defined for login, start it up.
-        if ($authenticator->hasAction()) {
-            return redirect()->route('auth-action-show')->withCookies();
-        }
-    
-        // ✅ Add success message
-        return redirect()->to(config('admin/dashboard')->loginRedirect())
-            ->with('success', 'Login successful! Welcome back.') // Flash success message
-            ->withCookies();
+{
+    // Validate input
+    $rules = $this->getValidationRules();
+
+    if (! $this->validateData($this->request->getPost(), $rules, [], config('Auth')->DBGroup)) {
+        return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
     }
-    
+
+    // Collect credentials
+    $credentials = $this->request->getPost(setting('Auth.validFields')) ?? [];
+    $credentials = array_filter($credentials);  // Filter out empty values
+    $credentials['password'] = $this->request->getPost('password');
+
+    // Authenticate using session authenticator
+    $authenticator = auth('session')->getAuthenticator();
+    $result = $authenticator->attempt($credentials);
+
+    if (!$result->isOK()) {
+        return redirect()->route('admin/login')
+            ->withInput()
+            ->with('error', $result->reason()); // Flash error message
+    }
+
+    // If an action is required (e.g., multi-factor authentication), handle it
+    if ($authenticator->hasAction()) {
+        return redirect()->route('auth-action-show')->withCookies();
+    }
+
+    // Redirect to the admin dashboard
+    return redirect()->to('/admin/dashboard') // Redirect directly to the admin dashboard
+        ->with('success', 'Login successful! Welcome back.')
+        ->withCookies();
+}
+
 
     // Admin Logout
     public function logout()
