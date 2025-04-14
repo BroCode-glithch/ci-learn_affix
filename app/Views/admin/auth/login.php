@@ -1,65 +1,41 @@
-<!-- app/Views/admin/auth/login.php -->
-
 <?= $this->extend('admin/layout/app'); ?>
+
+<?php $this->section('title') ?>Login Admin Account<?php $this->endSection() ?>
 
 <?php $this->section('content'); ?>
 
-<div id="layoutAuthentication">
-            <div id="layoutAuthentication_content">
-                <main>
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-5">
-                                <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
-                                    <div class="card-body">
-                                        <form method="post" action="<?= base_url('admin/login') ?>">
-                                            <div class="form-floating mb-3">
-                                                <input class="form-control" name="email" id="inputEmail" type="email" placeholder="name@example.com" required />
-                                                <label for="inputEmail">Email address</label>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <input class="form-control" name="password" id="inputPassword" type="password" placeholder="Password" required />
-                                                <label for="inputPassword">Password</label>
-                                            </div>
-                                            <div class="form-check mb-3">
-                                                <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />
-                                                <label class="form-check-label" for="inputRememberPassword">Remember Password</label>
-                                            </div>
-                                            <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <a class="small" href="password.html">Forgot Password?</a>
-                                            </div>
-                                            <div class="mt-4 mb-0">
-                                                <!-- Submit Button -->
-                                                <div class="d-grid">
-                                                    <button type="submit" class="btn btn-primary btn-block">Login</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="<?php echo base_url('admin/register') ?>">Need an account? Sign up!</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </main>
-            </div>
-            <div id="layoutAuthentication_footer">
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
-            </div>
+
+<div class="container mt-5" style="max-width: 500px;">
+    <h3 class="mb-4">Admin Login</h3>
+
+        <!-- Display Flash Messages -->
+    <?php if(session()->getFlashdata('error')): ?>
+    <div class="alert alert-danger">
+        <?= session()->getFlashdata('error') ?>
+    </div>
+    <?php endif; ?>
+
+    <?php if(session()->getFlashdata('success')): ?>
+        <div class="alert alert-success">
+            <?= session()->getFlashdata('success') ?>
         </div>
+    <?php endif; ?>
+
+    <form action="<?= site_url('admin/login') ?>" method="post">
+        <?= csrf_field() ?>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email Address</label>
+            <input type="email" name="email" id="email" value="<?= old('email') ?>" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name="password" id="password" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Login</button>
+    </form>
+</div>
 
 <?php $this->endSection(); ?>

@@ -3,13 +3,10 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-// use CodeIgniter\Shield\Models\UserModel;
 use App\Models\Admin\AdminModel;
-use Config\Services;
 use CodeIgniter\HTTP\RedirectResponse;
-use CodeIgniter\Shield\Authentication\Authenticators\Session;
-use CodeIgniter\Shield\Traits\Viewable;
 use CodeIgniter\Shield\Validation\ValidationRules;
+use Config\Services;
 
 class AdminAuthController extends BaseController
 {
@@ -20,128 +17,105 @@ class AdminAuthController extends BaseController
     {
         $this->auth = Services::auth();
         $this->adminModel = new AdminModel();
+        helper(['url', 'form']);
     }
 
-    // Admin Registration Form
     public function register()
     {
         return view('admin/auth/register');
     }
 
-    // Handle Admin Registration
     public function registerPost()
     {
-        $email = $this->request->getPost('email');
-        $firstname = $this->request->getPost('first_name');
-        $lastname = $this->request->getPost('last_name');
-        $username = $firstname . ' '. $lastname;
-        $password = $this->request->getPost('password');
-        $passwordConfirm = $this->request->getPost('password_confirm');
-
+        $request = service('request');
+    
+        $firstName = $request->getPost('first_name');
+        $lastName = $request->getPost('last_name');
+        $email = $request->getPost('email');
+        $password = $request->getPost('password');
+        $passwordConfirm = $request->getPost('password_confirm');
+    
+        // Simple validation
         if ($password !== $passwordConfirm) {
-            return redirect()->back()->with('error', 'Passwords do not match.');
+            return redirect()->to('/admin/register')->with('error', 'Passwords do not match.');
         }
-
-        // Prepare user data
-        $data = [
-            'email'    => $email,
-            'username' => $username,
-            'password' => $password, // CodeIgniter Shield will automatically hash the password
-            'is_admin' => true, // You can define a custom field here to mark the user as an admin
-        ];
-
-        // Try to create a new user
+    
+        if ($this->adminModel->where('email', $email)->first()) {
+            return redirect()->to('/admin/register')->with('error', 'Email already registered.');
+        }
+    
         try {
-            $admin = $this->adminModel->save($data); // Use save() instead of createUser()
-            
-            if ($admin) {
-                return redirect()->to('/admin/login')->with('success', 'Account created successfully. Please log in.');
-            } else {
-                return redirect()->back()->with('error', 'Something went wrong.');
-            }
+            $this->adminModel->save([
+                'first_name' => $firstName,
+                'last_name' => $lastName,
+                'email' => $email,
+                'password' => password_hash($password, PASSWORD_DEFAULT),
+                'is_admin' => 1,
+            ]);
+            return redirect()->to('/admin/login')->with('success', 'Admin registered successfully. Login to continue.');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Something went wrong. Please try again.' . $e);
+            return redirect()->to('/admin/register')->with('error', 'Registration failed: ' . $e->getMessage());
         }
     }
+    
 
     // Admin Login
     public function login()
     {
+        // Check if user is already logged in
+        if (session()->get('isLoggedIn')) {
+            return redirect()->to('/admin/dashboard');
+        }
+
         return view('admin/auth/login');
     }
-    protected function getValidationRules(): array
-    {
-        $rules = new ValidationRules();
 
-        return $rules->getLoginRules();
-    }
-
-    // public function loginPost()
-    // {
-    //     $email = $this->request->getPost('email');
-    //     $password = $this->request->getPost('password');
-
-    //     if (!$email && !$password) {
-    //         return redirect()->back()->with('error', 'Email or Passwords do not match.');
-    //     }
-
-    //     // Prepare user data
-    //     $data = [
-    //         'email'    => $email,
-    //         'password' => $password, // CodeIgniter Shield will automatically hash the password
-    //         'is_admin' => true, // You can define a custom field here to mark the user as an admin
-    //     ];
-
-    //     // Try to create a new user
-    //     try {
-    //         $admin = $this->adminModel->save($data); // Use save() instead of createUser()
-            
-    //         if ($admin) {
-    //             return redirect()->to('/admin/dashboard')->with('success', 'Account created successfully. Please log in.');
-    //         } else {
-    //             return redirect()->back()->with('error', 'Something went wrong. Please try again.');
-    //         }
-    //     } catch (\Exception $e) {
-    //         return redirect()->back()->with('error', 'Something went wrong. Please try again.');
-    //     }
-        
-    // }
-
+    // Admin Login Post
     public function loginPost(): RedirectResponse
-{
-    // Validate input
-    $rules = $this->getValidationRules();
+    {
+        // Validate input
+        $validation = Services::validation();
+        $validation->setRules([
+            'email'    => 'required|valid_email',
+            'password' => 'required|min_length[6]',
+        ]);
 
-    if (! $this->validateData($this->request->getPost(), $rules, [], config('Auth')->DBGroup)) {
-        return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        if (!$this->validate($validation->getRules())) {
+            return redirect()->back()->withInput()->with('error', 'Invalid input.');
+        }
+
+        $email = $this->request->getPost('email');
+        $password = $this->request->getPost('password');
+
+        // Attempt login using Shield's authentication
+        $credentials = [
+            'email'    => $email,
+            'password' => $password,
+        ];
+
+        $authenticator = auth('session')->getAuthenticator();
+        $result = $authenticator->attempt($credentials);
+
+        if (!$result->isOK()) {
+            return redirect()->route('admin/login')
+                ->withInput()
+                ->with('error', $result->reason()); // Flash error message
+        }
+
+        // Check if the user is an admin
+        $user = $this->auth->user();
+        if (!$user->is_admin) {
+            // If not an admin, logout and redirect
+            $this->auth->logout();
+            return redirect()->route('admin/login')
+                ->with('error', 'You are not authorized to access this area.');
+        }
+
+        // Redirect to the admin dashboard
+        return redirect()->to('/admin/dashboard')
+            ->with('success', 'Login successful! Welcome back.')
+            ->withCookies();
     }
-
-    // Collect credentials
-    $credentials = $this->request->getPost(setting('Auth.validFields')) ?? [];
-    $credentials = array_filter($credentials);  // Filter out empty values
-    $credentials['password'] = $this->request->getPost('password');
-
-    // Authenticate using session authenticator
-    $authenticator = auth('session')->getAuthenticator();
-    $result = $authenticator->attempt($credentials);
-
-    if (!$result->isOK()) {
-        return redirect()->route('admin/login')
-            ->withInput()
-            ->with('error', $result->reason()); // Flash error message
-    }
-
-    // If an action is required (e.g., multi-factor authentication), handle it
-    if ($authenticator->hasAction()) {
-        return redirect()->route('auth-action-show')->withCookies();
-    }
-
-    // Redirect to the admin dashboard
-    return redirect()->to('/admin/dashboard') // Redirect directly to the admin dashboard
-        ->with('success', 'Login successful! Welcome back.')
-        ->withCookies();
-}
-
 
     // Admin Logout
     public function logout()

@@ -65,14 +65,7 @@ $routes->get('/blog', 'Blog\BlogController::index');
 // $routes->get('/admin/users/', 'Admin\AdminController::user');
 // $routes->get('/admin/settings/', 'Admin\AdminController::settings');
 
-$routes->group('admin', ['fiter' => 'auth'], function($routes) {
-    // Admin login
-    $routes->get('login', 'Admin\AdminAuthController::login');
-    $routes->post('login', 'Admin\AdminAuthController::loginPost');
-
-    // Admin registration
-    $routes->get('register', 'Admin\AdminAuthController::register');
-    $routes->post('register', 'Admin\AdminAuthController::registerPost');
+$routes->group('admin', ['filter' => 'auth'], function($routes) {
 
     // Admin dashboard
     $routes->get('dashboard', 'Admin\AdminController::index');
@@ -84,4 +77,11 @@ $routes->group('admin', ['fiter' => 'auth'], function($routes) {
 $routes->get('user/profile', 'User\UserController::profile');
 $routes->match(['get', 'post'], 'user/edit', 'User\UserController::editProfile');
 
+// Admin login
+$routes->get('admin/login', 'Admin\AdminAuthController::login');
+$routes->post('admin/login', 'Admin\AdminAuthController::loginPost');
+
+// Admin registration
+$routes->get('admin/register', 'Admin\AdminAuthController::register');
+$routes->post('admin/register', 'Admin\AdminAuthController::registerPost');
 

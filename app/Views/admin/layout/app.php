@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Login - Learn Affix Admin</title>
+        <title><?= $this->renderSection('title') ?></title>
         <link rel="shortcut icon" type="image/x-icon" href="<?= base_url('public/assets/img/favicon.ico') ?>">
         <link href="<?php echo base_url('public/admin/css/styles.css') ?>" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -24,32 +24,46 @@
             align-items: center;
             justify-content: space-between;
             padding: 15px 20px;
-            min-width: 250px;
-            max-width: 350px;
+            min-width: 280px;
+            max-width: 400px;
             background-color: #333;
             color: white;
-            border-radius: 5px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
             margin-bottom: 10px;
-            opacity: 1;
-            transition: opacity 0.5s ease-in-out;
+            opacity: 0;
+            transform: translateX(100%);
+            animation: slideIn 0.5s forwards;
+            font-size: 0.95rem;
         }
 
         .toast-success {
-            background-color: #28a745; /* Green */
+            background-color: #28a745;
         }
 
         .toast-error {
-            background-color: #dc3545; /* Red */
+            background-color: #dc3545;
+        }
+
+        .toast i {
+            margin-right: 8px;
+            font-size: 1.1rem;
         }
 
         .close-toast {
             background: none;
             border: none;
             color: white;
-            font-size: 18px;
+            font-size: 20px;
             cursor: pointer;
-            margin-left: 10px;
+            margin-left: 15px;
+        }
+
+        @keyframes slideIn {
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
         </style>
@@ -60,14 +74,14 @@
         <div class="toast-container">
             <?php if (session()->getFlashdata('success')) : ?>
                 <div class="toast toast-success">
-                    <span><?= session()->getFlashdata('success'); ?></span>
+                    <span><i class="fas fa-check-circle"></i> <?= session()->getFlashdata('success'); ?></span>
                     <button class="close-toast">&times;</button>
                 </div>
             <?php endif; ?>
 
             <?php if (session()->getFlashdata('error')) : ?>
                 <div class="toast toast-error">
-                    <span><?= session()->getFlashdata('error'); ?></span>
+                    <span><i class="fas fa-times-circle"></i> <?= session()->getFlashdata('error'); ?></span>
                     <button class="close-toast">&times;</button>
                 </div>
             <?php endif; ?>
