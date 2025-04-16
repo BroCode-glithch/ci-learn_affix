@@ -6,7 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\About\About;
 use App\Models\Services\Services;
 use App\Models\Topic\Topic;
-use App\Models\Team\Team;
+use App\Models\Team\TeamModel;
 
 class AboutController extends BaseController
 {
@@ -16,7 +16,7 @@ class AboutController extends BaseController
         $aboutModel = new About();
         $serviceModel = new Services();
         $topicModel = new Topic(); // Load the Topic model
-        $teamModel = new Team(); // Load the TeamModel
+        $teamModel = new TeamModel(); // Load the TeamModel
 
         // Fetch about data from the database
         $aboutData = $aboutModel->findAll();

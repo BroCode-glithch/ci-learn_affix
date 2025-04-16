@@ -4,24 +4,29 @@
 
 <?= $this->section('content') ?>
 
-<section class="slider-area ">
-            <div class="slider-active">
-                <!-- Single Slider -->
-                <div class="single-slider slider-height d-flex align-items-center">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-xl-6 col-lg-7 col-md-12">
-                                <div class="hero__caption">
-                                    <h1 data-animation="fadeInLeft" data-delay="0.2s">Online learning<br> platform</h1>
-                                    <p data-animation="fadeInLeft" data-delay="0.4s">Build skills with courses, certificates, and degrees online from world-class universities and companies</p>
-                                    <a href="#" class="btn hero-btn" data-animation="fadeInLeft" data-delay="0.7s">Join for Free</a>
+        <section class="slider-area ">
+                    <div class="slider-active">
+                        <!-- Single Slider -->
+                        <div class="single-slider slider-height d-flex align-items-center">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-xl-6 col-lg-7 col-md-12">
+                                        <div class="hero__caption">
+                                            <h1 data-animation="fadeInLeft" data-delay="0.2s">Online learning<br> platform</h1>
+                                            <p data-animation="fadeInLeft" data-delay="0.4s">Build skills with courses, certificates, and degrees online from world-class universities and companies</p>
+                                            <?php if(isset(auth()->user()->username)) : ?> 
+                                                <a href="<?php echo base_url('courses') ?>" class="btn hero-btn" data-animation="fadeInLeft" data-delay="0.7s">Join for Free</a>
+                                            <?php else : ?>
+                                                <a href="<?php echo base_url(relativePath: 'register') ?>" class="btn hero-btn" data-animation="fadeInLeft" data-delay="0.7s">Sign Up for Free</a>
+                                                <a href="<?php echo base_url('login') ?>" class="btn hero-btn" data-animation="fadeInLeft" data-delay="0.7s">Log In for Free</a>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </div>          
                         </div>
-                    </div>          
-                </div>
-            </div>
-</section>
+                    </div>
+        </section>
         <!-- ? services-area -->
         <div class="services-area">
             <div class="container">
@@ -140,53 +145,7 @@
                 </div>
             </div>
         </div>
-        <!-- Courses Area End -->
-        <!--? About Area-1 Start -->
-        <section class="about-area1 fix pt-10">
-            <div class="support-wrapper align-items-center">
-                <div class="left-content1">
-                    <div class="about-icon">
-                        <img src="<?= base_url('public/assets/img/icon/about.svg'); ?>" alt="">
-                    </div>
-                    <!-- section title -->
-                    <div class="section-tittle section-tittle2 mb-55">
-                        <div class="front-text">
-                            <h2 class=""><?= esc($about['title']); ?></h2>
-                            <p><?= esc($about['description']); ?></p>
-                        </div>
-                    </div>
-        
-                    <!-- Features -->
-                    <?php 
-                    // Ensure the features content is split into an array of paragraphs
-                    $features = is_array($about['features']) ? $about['features'] : explode(PHP_EOL, $about['features']);
-                    
-                    if (!empty($features)): ?>
-                        <?php foreach ($features as $feature): ?>
-                            <div class="single-features">
-                                <div class="features-icon">
-                                    <img src="<?= base_url('public/assets/img/icon/right-icon.svg'); ?>" alt="">
-                                </div>
-                                <div class="features-caption">
-                                    <p><?= esc(trim($feature)); ?></p>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </div>
-        
-                <div class="right-content1">
-                    <!-- img -->
-                    <div class="right-img">
-                        <img src="<?= base_url('public/assets/img/gallery/' . esc($about['image'])); ?>" alt="About Image">
-                        <div class="video-icon">
-                            <a class="popup-video btn-icon" href="<?= esc($about['video_url']); ?>"><i class="fas fa-play"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- About Area End -->              
+        <!-- Courses Area End -->             
         
         <!-- Top Subjects Area Start -->
         <div class="topic-area">
@@ -295,55 +254,27 @@
                         </div>
                     </div>
                 </div>
+        
                 <div class="team-active">
-                    <div class="single-cat text-center">
-                        <div class="cat-icon">
-                            <img src="<?php echo base_url('public/assets/img/gallery/team1.png'); ?>" alt="">
-                        </div>
-                        <div class="cat-cap">
-                            <h5><a href="services.html">Mr. Urela</a></h5>
-                            <p>The automated process all your website tasks.</p>
-                        </div>
-                    </div>
-                    <div class="single-cat text-center">
-                        <div class="cat-icon">
-                            <img src="<?php echo base_url('public/assets/img/gallery/team2.png'); ?>" alt="">
-                        </div>
-                        <div class="cat-cap">
-                            <h5><a href="services.html">Mr. Uttom</a></h5>
-                            <p>The automated process all your website tasks.</p>
-                        </div>
-                    </div>
-                    <div class="single-cat text-center">
-                        <div class="cat-icon">
-                            <img src="<?php echo base_url('public/assets/img/gallery/team3.png'); ?>" alt="">
-                        </div>
-                        <div class="cat-cap">
-                            <h5><a href="services.html">Mr. Shakil</a></h5>
-                            <p>The automated process all your website tasks.</p>
-                        </div>
-                    </div>
-                    <div class="single-cat text-center">
-                        <div class="cat-icon">
-                            <img src="<?php echo base_url('public/assets/img/gallery/team4.png'); ?>" alt="">
-                        </div>
-                        <div class="cat-cap">
-                            <h5><a href="services.html">Mr. Arafat</a></h5>
-                            <p>The automated process all your website tasks.</p>
-                        </div>
-                    </div>
-                    <div class="single-cat text-center">
-                        <div class="cat-icon">
-                            <img src="<?php echo base_url('public/assets/img/gallery/team3.png'); ?>" alt="">
-                        </div>
-                        <div class="cat-cap">
-                            <h5><a href="services.html">Mr. saiful</a></h5>
-                            <p>The automated process all your website tasks.</p>
-                        </div>
-                    </div>
+                    <?php if (!empty($teams)) : ?>
+                        <?php foreach ($teams as $team) : ?>
+                            <div class="single-cat text-center">
+                                <div class="cat-icon">
+                                    <img src="<?= base_url('public/assets/img/gallery/' . esc($team['image'])) ?>" alt="<?= esc($team['name']) ?>">
+                                </div>
+                                <div class="cat-cap">
+                                    <h5><a href="#"><?= esc($team['name']) ?></a></h5>
+                                    <p><?= esc($team['bio']) ?></p>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else : ?>
+                        <p class="text-center">No team members found.</p>
+                    <?php endif; ?>
                 </div>
             </div>
         </section>
+        
         <!-- Services End -->
         <!--? About Area-2 Start -->
         <section class="about-area2 fix pb-padding">
@@ -363,7 +294,15 @@
                                 and professional goals
                             with us.</h2>
                             <p>The automated process all your website tasks. Discover tools and techniques to engage effectively with vulnerable children and young people.</p>
-                            <a href="#" class="btn">Join now for Free</a>
+                            <?php if (isset(auth()->user()->username)) : ?>
+                                <a href="<?= base_url('courses') ?>" class="btn">
+                                    View and Enrol in our <b>Courses</b> for Free
+                                </a>
+                            <?php else : ?>
+                                <a href="<?= base_url('login') ?>" class="btn">
+                                    Login to Start Learning
+                                </a>
+                            <?php endif; ?>                            
                         </div>
                     </div>
                 </div>

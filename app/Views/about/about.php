@@ -50,56 +50,6 @@
     </div>
 
     <!-- About Section -->
-    <section class="about-area1 fix pt-10">
-        <div class="support-wrapper align-items-center">
-            <div class="left-content1">
-                <div class="about-icon">
-                    <img src="<?= base_url('public/assets/img/icon/about.svg') ?>" alt="About Icon">
-                </div>
-                <div class="section-tittle section-tittle2 mb-55">
-                    <div class="front-text">
-                        <h2><?= $about['title'] ?></h2>
-                        <p><?= $about['description'] ?></p>
-                    </div>
-                </div>
-
-                <!-- Single Features (Dynamic) -->
-                <div class="single-features">
-                    <div class="features-icon">
-                        <img src="<?= base_url('public/assets/img/icon/right-icon.svg') ?>" alt="Icon">
-                    </div>
-                    <div class="features-caption">
-                        <p>Techniques to engage effectively with vulnerable children and young people.</p>
-                    </div>
-                </div>
-                <div class="single-features">
-                    <div class="features-icon">
-                        <img src="<?= base_url('public/assets/img/icon/right-icon.svg') ?>" alt="Icon">
-                    </div>
-                    <div class="features-caption">
-                        <p>Join millions of people from around the world learning together.</p>
-                    </div>
-                </div>
-                <div class="single-features">
-                    <div class="features-icon">
-                        <img src="<?= base_url('public/assets/img/icon/right-icon.svg') ?>" alt="Icon">
-                    </div>
-                    <div class="features-caption">
-                        <p>Join millions of people from around the world learning together. Online learning is as easy and natural.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="right-content1">
-                <div class="right-img">
-                    <img src="<?= base_url('public/assets/img/gallery/about.png') ?>" alt="About Image">
-                    <div class="video-icon">
-                        <a class="popup-video btn-icon" href="https://www.youtube.com/watch?v=up68UAfH0d0"><i class="fas fa-play"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Topics Section -->
     <div class="topic-area section-padding40">
@@ -155,7 +105,7 @@
                     </div>
                     <div class="cat-cap">
                         <h5><a href="services.html"><?= $member['name'] ?></a></h5>
-                        <p><?= $member['position'] ?></p>
+                        <p><?= $member['role'] ?></p>
                     </div>
                 </div>
                 <?php endforeach; ?>

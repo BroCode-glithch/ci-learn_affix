@@ -2,12 +2,14 @@
 
 namespace App\Controllers;
 
+use App\Models\System;
 use CodeIgniter\Controller;
+use Psr\Log\LoggerInterface;
 use CodeIgniter\HTTP\CLIRequest;
+use App\Models\Developer\Developer;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use Psr\Log\LoggerInterface;
 
 /**
  * Class BaseController
@@ -43,6 +45,9 @@ abstract class BaseController extends Controller
      */
     // protected $session;
 
+    protected $system;
+    protected $developer;
+
     /**
      * @return void
      */
@@ -51,8 +56,17 @@ abstract class BaseController extends Controller
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
 
+        $systemModel = new System();
+        $this->system = $systemModel->first();
+
+        $developerModel = new Developer();
+        $this->developer = $developerModel->first();
+
         // Preload any models, libraries, etc, here.
 
         // E.g.: $this->session = service('session');
+         // Optional: Share with views globally
+         service('renderer')->setVar('systems', $this->system);
+         service('renderer')->setVar('developer', $this->developer);
     }
 }

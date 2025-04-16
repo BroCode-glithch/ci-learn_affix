@@ -56,6 +56,8 @@ $routes->get('/payment/paypal', 'Payment\CoursePayment::paypal');
 $routes->get('payment/callback', 'Payment\CoursePayment::callback');
 
 $routes->get('/blog', 'Blog\BlogController::index');
+$routes->get('/blog/(:segment)', 'Blog\BlogController::detail/$1');
+
 
 
 // Admin
