@@ -13,14 +13,32 @@ class CourseController extends BaseController
     {
         $courseModel = new Courses();
     
-        // Fetch distinct categories
-        $data['categories'] = $courseModel->select('DISTINCT(category)')->findAll();
+
+        // Fetch courses from the database
+        $data['courses_data'] = $courseModel->orderBy('id', 'DESC')->findAll();  
     
         // Fetch distinct topics
         // $data['topics'] = $courseModel->getTopics();
     
         // Fetch all courses
-        $data['courses'] = $courseModel->orderBy('id', 'DESC')->findAll(); 
+        $data['courses'] = $courseModel->orderBy('id', 'DESC')->findAll(6); 
+
+        $data['categories'] = $courseModel->select('DISTINCT(category), image')->findAll(3);
+
+        // Fetch images for categories from Unsplash dynamically
+        foreach ($data['categories'] as &$category) {
+            if (empty($category['image'])) {
+                $imageUrl = $this->getUnsplashImage($category['category']);
+        
+                // Save image to the DB for this category
+                $courses->where('category', $category['category'])
+                        ->set(['image' => $imageUrl])
+                        ->update();
+        
+                // Update the local array for the view
+                $category['image'] = $imageUrl;
+            }
+        }
     
         // Fetch featured (highlighted) courses
         $data['highlighted_courses'] = $courseModel->where('is_featured', 1)->orderBy('id', 'DESC')->findAll(6);
@@ -49,14 +67,47 @@ class CourseController extends BaseController
 
     public function allCategories()
     {
-        // Load the Category model or directly fetch categories from the database
-        $categoryModel = new Courses();  // Example of a model for categories
-        
-        // Fetch all categories
-        $data['categories'] = $categoryModel->findAll();
+        $courseModel = new Courses();  // Use a single model consistently
+    
+        // Fetch distinct categories with images
+        $data['categories'] = $courseModel->select('DISTINCT(category), image')->findAll();
+    
+        // Dynamically fetch Unsplash images if image field is empty
+        foreach ($data['categories'] as &$category) {
+            if (empty($category['image'])) {
+                $imageUrl = $this->getUnsplashImage($category['category']);
+    
+                // Save to DB
+                $courseModel->where('category', $category['category'])
+                            ->set(['image' => $imageUrl])
+                            ->update();
+    
+                $category['image'] = $imageUrl;
+            }
+        }
+    
+        return view('courses/all-categories', $data);
+    }
+    
 
-        // Return a view that displays all the categories
-        return view('courses/all-categories', $data);  // Ensure you have a view for all categories
+    private function getUnsplashImage($category)
+    {
+        $client = new Client();
+        $accessKey = env('UNSPLASH_ACCESS_KEY'); // Use your Access Key here
+        $url = "https://api.unsplash.com/photos/random?query=" . urlencode($category) . "&client_id=" . $accessKey;
+
+        try {
+            $response = $client->request('GET', $url);
+            $data = json_decode($response->getBody()->getContents(), true);
+
+            if (!empty($data)) {
+                return $data[0]['urls']['regular']; // Fetching the regular-sized image URL
+            }
+        } catch (\Exception $e) {
+            return 'default-image.jpg'; // Fallback if there's an error
+        }
+
+        return 'default-image.jpg'; // Fallback if no image is found
     }
     
     public function show($id)

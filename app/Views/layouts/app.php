@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
     <link rel="shortcut icon" type="image/x-icon" href="<?= base_url('public/assets/img/favicon.ico') ?>">
+    <!-- AOS CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
     <!-- CSS -->
     <link rel="stylesheet" href="<?= base_url('public/assets/css/bootstrap.min.css'); ?>">
@@ -63,6 +65,34 @@
             font-size: 18px;
             cursor: pointer;
             margin-left: 10px;
+        }
+
+        .hero-btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: stretch; /* makes buttons full width */
+            margin-top: 20px;
+        }
+
+        .hero-btn {
+            text-align: center;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #888;
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+        .free-text {
+            color: green;
+            font-weight: bold;
+            font-size: 18px;
         }
     </style>
 
@@ -155,7 +185,7 @@
     </header>
 
     <!-- Main Content -->
-    <div class="app">
+    <div class="app" data-aos="zoom-in">
         <?= $this->renderSection('content'); ?>
     </div>
 
@@ -308,6 +338,16 @@
     <script src="<?= base_url('public/assets/js/jquery.ajaxchimp.min.js'); ?>"></script>
     <script src="<?= base_url('public/assets/js/plugins.js'); ?>"></script>
     <script src="<?= base_url('public/assets/js/main.js'); ?>"></script>
+
+    <!-- AOS JS -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,  // Animation duration in milliseconds
+            easing: 'ease',  // Easing function
+            once: true,      // Animation will only happen once
+        });
+    </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {

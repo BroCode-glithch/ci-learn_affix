@@ -36,12 +36,12 @@
         <?php foreach ($categories as $category) : ?>
             <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
                 <div class="card shadow-lg border-light rounded overflow-hidden">
-                    <img src="<?= base_url('public/assets/img/gallery/'.$category['image']); ?>" alt="<?= esc($category['category']); ?>" class="card-img-top" style="height: 200px; object-fit: cover;">
+                <img src="<?= esc($category['image']); ?>" alt="<?= esc($category['category']); ?>" class="card-img-top" style="height: 200px; object-fit: cover;">
                     <div class="card-body">
                         <h5 class="card-title text-center text-primary"><?= esc($category['category']); ?></h5>
                         <p class="card-text text-center">Explore a variety of courses in the <?= esc($category['category']); ?> category, designed to help you enhance your skills and knowledge.</p>
                         <div class="d-flex justify-content-center">
-                            <a href="<?= base_url('course/' . $category['id']); ?>" class="btn btn-primary">Browse Courses</a>
+                            <a href="<?= base_url('courses/course-category/' . urlencode($category['category'])); ?>" class="btn btn-primary">Browse Courses</a>
                         </div>
                     </div>
                 </div>

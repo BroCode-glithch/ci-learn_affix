@@ -14,6 +14,7 @@
         "ext-intl": "*",
         "ext-mbstring": "*",
         "codeigniter4/shield": "dev-develop",
+        "guzzlehttp/guzzle": "^7.9",
         "laminas/laminas-escaper": "^2.14",
         "psr/log": "^3.0"
     },

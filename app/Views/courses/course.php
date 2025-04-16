@@ -30,7 +30,6 @@
     </div>
 </section>
 
-<!-- Courses Area Start -->
 <div class="courses-area section-padding40 fix">
     <div class="container">
         <div class="row justify-content-center">
@@ -42,61 +41,66 @@
         </div>
         <div class="row">
             <!-- Loop through courses -->
-            <?php if (!empty($courses)) : ?>
-                <?php foreach ($courses as $course) : ?>
-                    <div class="col-lg-4 col-md-6 col-sm-12">
+            <?php if (!empty($courses_data)) : ?>
+                <?php foreach ($courses_data as $course) : ?>
+                    <div class="col-lg-4 col-md-6 col-sm-12" data-aos="fade-right" data-aos-delay="400">
                         <div class="properties pb-20">
                             <div class="properties__card">
+                                <!-- Course Preview Image or Video Thumbnail -->
                                 <div class="properties__img overlay1">
-                                    <a href="<?= base_url('course/' . $course['id']); ?>">
-                                        <img src="<?= base_url('public/assets/img/gallery/' . $course['image']); ?>" 
-                                            alt="<?= esc($course['title']); ?>">
+                                    <?php 
+                                        $thumbnail = $course['image'];
+                                    ?>
+                                    <a href="<?php echo !empty($course['affiliate_url']) ? $course['affiliate_url'] : '#'; ?>" target="_blank">
+                                        <img src="<?php echo $thumbnail; ?>" alt="<?php echo htmlspecialchars($course['title']); ?>">
                                     </a>
                                 </div>
+
+                                <!-- Course Content -->
                                 <div class="properties__caption">
-                                    <p><?= esc($course['category']); ?></p>
-                                    <h3><a href="<?= base_url('course/' . $course['id']); ?>"><?= esc($course['title']); ?></a></h3>
+                                    <p><?php echo htmlspecialchars($course['category']); ?></p>
+                                    <h3><a href="<?= base_url('course/' . $course['id']); ?>"><?php echo htmlspecialchars($course['title']); ?></a></h3>
                                     <p>
                                         <?php 
                                             $words = explode(" ", $course['description']); 
                                             $wordLimit = 10;
-                                            if (count($words) > $wordLimit) {
-                                                echo esc(implode(" ", array_slice($words, 0, $wordLimit))) . '...';
-                                            } else {
-                                                echo esc($course['description']);
-                                            }
+                                            echo htmlspecialchars(implode(" ", array_slice($words, 0, $wordLimit))) . (count($words) > $wordLimit ? '...' : '');
                                         ?>
                                     </p>
+
                                     <div class="properties__footer d-flex justify-content-between align-items-center">
                                         <div class="restaurant-name">
                                             <div class="rating">
                                                 <?php 
-                                                $rating = round($course['rating'] * 2) / 2;
-                                                $fullStars = floor($rating);
-                                                $halfStar = ($rating - $fullStars) == 0.5;
-                                                $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0);
+                                                    $rating = round($course['rating'] * 2) / 2;
+                                                    $fullStars = floor($rating);
+                                                    $halfStar = ($rating - $fullStars) == 0.5;
+                                                    $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0);
 
-                                                for ($i = 0; $i < $fullStars; $i++) {
-                                                    echo '<i class="fas fa-star"></i>';
-                                                }
-                                                if ($halfStar) {
-                                                    echo '<i class="fas fa-star-half-alt"></i>';
-                                                }
-                                                for ($i = 0; $i < $emptyStars; $i++) {
-                                                    echo '<i class="far fa-star"></i>';
-                                                }
+                                                    for ($i = 0; $i < $fullStars; $i++) echo '<i class="fas fa-star"></i>';
+                                                    if ($halfStar) echo '<i class="fas fa-star-half-alt"></i>';
+                                                    for ($i = 0; $i < $emptyStars; $i++) echo '<i class="far fa-star"></i>';
                                                 ?>
                                             </div>
-                                            <p><span>(<?= $rating; ?>)</span> based on <?= intval($course['reviews']); ?> reviews</p>
+                                            <p><span>(<?php echo $rating; ?>)</span> based on <?php echo intval($course['reviews']); ?> reviews</p>
                                         </div>
+
+                                        <!-- Price -->
                                         <div class="price">
-                                            <span>$<?= number_format($course['price'], 2); ?></span>
+                                            <?php if ($course['price'] > 0) : ?>
+                                                <span class="original-price">$<?php echo number_format($course['price'], 2); ?></span>
+                                                <span class="free-text">FREE</span>
+                                            <?php else : ?>
+                                                <span class="free-text">FREE</span>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </div>
-                                <a href="<?= base_url('course/' . $course['id']); ?>" class="border-btn border-btn2">
+
+                                <!-- Affiliate Link Button -->
+                                <a href="<?php echo !empty($course['affiliate_url']) ? $course['affiliate_url'] : '#'; ?>" class="border-btn border-btn2" target="_blank">
                                     Explore Course
-                                </a>                                    
+                                </a>
                             </div>
                         </div>
                     </div>

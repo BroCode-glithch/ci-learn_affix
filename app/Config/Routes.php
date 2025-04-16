@@ -34,6 +34,8 @@ use App\Controllers\Payment\CoursePayment;
 $routes->get('/', 'Home::index');
 service('auth')->routes($routes);
 
+$routes->get('fetch-thumbnail', 'Courses\CourseThumbnail::fetch');
+$routes->get('update-thumbnail', 'Courses\CourseThumbnail::updateThumbnail');
 $routes->get('/courses', 'Courses\CourseController::index');
 $routes->get('course/(:num)', 'Courses\CourseController::show/$1'); // ✅ Show course details
 $routes->get('courses/course-category/(:any)', 'Courses\CourseController::category/$1');
