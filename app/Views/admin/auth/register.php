@@ -1,75 +1,60 @@
-<?php $this->extend('admin/layout/app') ?>
+<?= $this->extend('admin/layout/app'); ?>
 
-<?php $this->section('title') ?>Create Admin Account<?php $this->endSection() ?>
+<?php $this->section('title') ?>Register Admin Account<?php $this->endSection() ?>
 
-<?php $this->section('content') ?>
+<?php $this->section('content'); ?>
 
-<div class="container mt-4">
-    <h2>Create Admin Account</h2>
-
-    <?php if (session()->getFlashdata('error')): ?>
-        <div class="alert alert-danger flash-message"><?= session()->getFlashdata('error') ?>
-            <button type="button" class="close-toast" aria-label="Close">&times;</button>
-        </div>
-    <?php endif; ?>
-
-    <?php if (session()->getFlashdata('success')): ?>
-        <div class="alert alert-success flash-message"><?= session()->getFlashdata('success') ?>
-            <button type="button" class="close-toast" aria-label="Close">&times;</button>
-        </div>
-    <?php endif; ?>
-
-    <form method="post" action="<?= site_url('admin/register') ?>">
-        <?= csrf_field() ?>
-
-        <div class="mb-3">
-            <label for="first_name" class="form-label">First Name</label>
-            <input type="text" name="first_name" class="form-control" required>
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-lg rounded-4 p-4" style="width: 100%; max-width: 450px;">
+        <div class="text-center mb-4">
+            <img src="<?= base_url('public/assets/img/logo.png') ?>" alt="Logo" class="mb-3" style="max-width: 100px;">
+            <h3 class="fw-bold">Admin Register</h3>
+            <p class="text-muted small">Create your admin account</p>
         </div>
 
-        <div class="mb-3">
-            <label for="last_name" class="form-label">Last Name</label>
-            <input type="text" name="last_name" class="form-control" required>
-        </div>
+        <!-- Flash Messages -->
+        <?php if (session('error')): ?>
+            <div class="alert alert-danger"><?= session('error') ?></div>
+        <?php endif; ?>
+        <?php if (session('success')): ?>
+            <div class="alert alert-success"><?= session('success') ?></div>
+        <?php endif; ?>
 
-        <div class="mb-3">
-            <label for="email" class="form-label">Email Address</label>
-            <input type="email" name="email" class="form-control" required>
-        </div>
+        <form action="<?= site_url('admin/register') ?>" method="post">
+            <?= csrf_field() ?>
 
-        <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" name="password" class="form-control" required>
-        </div>
+            <div class="mb-3 input-group">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                <input type="text" name="first_name" value="<?= old('first_name') ?>" class="form-control" placeholder="First Name" required>
+            </div>
 
-        <div class="mb-3">
-            <label for="password_confirm" class="form-label">Confirm Password</label>
-            <input type="password" name="password_confirm" class="form-control" required>
-        </div>
+            <div class="mb-3 input-group">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                <input type="text" name="last_name" value="<?= old('last_name') ?>" class="form-control" placeholder="Last Name" required>
+            </div>
 
-        <button type="submit" class="btn btn-primary">Register Admin</button>
-    </form>
+            <div class="mb-3 input-group">
+                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                <input type="email" name="email" value="<?= old('email') ?>" class="form-control" placeholder="Email Address" required>
+            </div>
+
+            <div class="mb-3 input-group">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
+            </div>
+
+            <div class="mb-3 input-group">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input type="password" name="password_confirm" class="form-control" placeholder="Confirm Password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Register</button>
+        </form>
+
+        <div class="text-center mt-3">
+            <a href="<?= site_url('admin/login') ?>">Already have an account? Login</a>
+        </div>
+    </div>
 </div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Auto-hide flash messages after 5 seconds
-        setTimeout(function () {
-            document.querySelectorAll(".flash-message").forEach(function (msg) {
-                msg.style.opacity = "0";
-                setTimeout(() => msg.remove(), 500);
-            });
-        }, 5000);
-
-        // Close flash message when clicked on the close button
-        document.querySelectorAll(".close-toast").forEach(function (btn) {
-            btn.addEventListener("click", function () {
-                let message = this.closest('.flash-message');
-                message.style.opacity = "0";
-                setTimeout(() => message.remove(), 500);
-            });
-        });
-    });
-</script>
-
-<?php $this->endSection() ?>
+<?php $this->endSection(); ?>

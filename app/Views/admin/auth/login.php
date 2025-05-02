@@ -4,38 +4,42 @@
 
 <?php $this->section('content'); ?>
 
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-lg rounded-4 p-4" style="width: 100%; max-width: 450px;">
+        <div class="text-center mb-4">
+            <img src="<?= base_url('public/assets/img/logo.png') ?>" alt="Logo" class="mb-3" style="max-width: 100px;">
+            <h3 class="fw-bold">Admin Login</h3>
+            <p class="text-muted small">Sign in to your admin account</p>
+        </div>
 
-<div class="container mt-5" style="max-width: 500px;">
-    <h3 class="mb-4">Admin Login</h3>
+        <!-- Flash Messages -->
+        <?php if (session('error')): ?>
+            <div class="alert alert-danger"><?= session('error') ?></div>
+        <?php endif; ?>
+        <?php if (session('success')): ?>
+            <div class="alert alert-success"><?= session('success') ?></div>
+        <?php endif; ?>
 
-        <!-- Display Flash Messages -->
-    <?php if(session()->getFlashdata('error')): ?>
-    <div class="alert alert-danger">
-        <?= session()->getFlashdata('error') ?>
+        <form action="<?= site_url('admin/login') ?>" method="post">
+            <?= csrf_field() ?>
+
+            <div class="mb-3 input-group">
+                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                <input type="email" name="email" id="email" value="<?= old('email') ?>" class="form-control" placeholder="Email Address" required>
+            </div>
+
+            <div class="mb-3 input-group">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+
+        <div class="text-center mt-3">
+            <a href="<?= site_url('admin/register') ?>">Don't have an account? Register</a>
+        </div>
     </div>
-    <?php endif; ?>
-
-    <?php if(session()->getFlashdata('success')): ?>
-        <div class="alert alert-success">
-            <?= session()->getFlashdata('success') ?>
-        </div>
-    <?php endif; ?>
-
-    <form action="<?= site_url('admin/login') ?>" method="post">
-        <?= csrf_field() ?>
-
-        <div class="mb-3">
-            <label for="email" class="form-label">Email Address</label>
-            <input type="email" name="email" id="email" value="<?= old('email') ?>" class="form-control" required>
-        </div>
-
-        <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" name="password" id="password" class="form-control" required>
-        </div>
-
-        <button type="submit" class="btn btn-primary w-100">Login</button>
-    </form>
 </div>
 
 <?php $this->endSection(); ?>

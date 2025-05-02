@@ -1,11 +1,15 @@
 <?php
 
+use Blog\BlogController;
+use Admin\AdminAuthController;
+use Newsletter\NewsletterController;
 use CodeIgniter\Router\RouteCollection;
-use App\Controllers\Courses\CourseController;
+
 use App\Controllers\About\AboutController;
 use App\Controllers\Admin\AdminController;
-
 use App\Controllers\Payment\CoursePayment;
+use App\Controllers\Courses\CourseController;
+use App\Controllers\Admin\BlogAdminController;
 
 /**
  * @var RouteCollection $routes
@@ -58,10 +62,10 @@ $routes->get('/payment/paypal', 'Payment\CoursePayment::paypal');
 $routes->get('payment/callback', 'Payment\CoursePayment::callback');
 
 $routes->get('/blog', 'Blog\BlogController::index');
-$routes->get('/blog/(:segment)', 'Blog\BlogController::detail/$1');
+$routes->get('/blog/(:segment)', 'BlogController::detail/$1');
 
 // Newsletter Route:
-$routes->post('subscribe', 'Newsletter\NewsletterController::subscribe');
+$routes->post('subscribe', 'NewsletterController::subscribe');
 
 $routes->get('unlock/(:num)', 'Courses\CourseController::unlock/$1');
  
@@ -75,23 +79,25 @@ $routes->get('unlock/(:num)', 'Courses\CourseController::unlock/$1');
 // $routes->get('/admin/users/', 'Admin\AdminController::user');
 // $routes->get('/admin/settings/', 'Admin\AdminController::settings');
 
-$routes->group('admin', ['filter' => 'auth'], function($routes) {
+// Admin login & register routes
+$routes->get('admin/login', 'Admin\AdminAuthController::login');
+$routes->post('admin/login', 'Admin\AdminAuthController::loginPost');
+$routes->get('admin/register', 'Admin\AdminAuthController::register');
+$routes->post('admin/register', 'Admin\AdminAuthController::registerPost');
+$routes->get('admin/logout', 'Admin\AdminAuthController::logout');
+
+$routes->group('admin', ['filter' => 'adminAuth'], function($routes) {
 
     // Admin dashboard
     $routes->get('dashboard', 'Admin\AdminController::index');
     
-    // Admin logout
-    $routes->get('logout', 'Admin\AdminAuthController::logout');
+    $routes->get('blog', 'BlogAdminController::index');
+    $routes->get('blog/create', 'BlogAdminController::create');
+    $routes->post('blog/store', 'BlogAdminController::store');
+    $routes->get('blog/edit/(:num)', 'BlogAdminController::edit/$1');
+    $routes->post('blog/update/(:num)', 'BlogAdminController::update/$1');
+    $routes->get('blog/delete/(:num)', 'BlogAdminController::delete/$1');
 });
 
 $routes->get('user/profile', 'User\UserController::profile');
 $routes->match(['GET', 'POST'], 'user/edit', 'User\UserController::editProfile');
-
-// Admin login
-$routes->get('admin/login', 'Admin\AdminAuthController::login');
-$routes->post('admin/login', 'Admin\AdminAuthController::loginPost');
-
-// Admin registration
-$routes->get('admin/register', 'Admin\AdminAuthController::register');
-$routes->post('admin/register', 'Admin\AdminAuthController::registerPost');
-
