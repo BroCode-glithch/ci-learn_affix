@@ -60,6 +60,12 @@ $routes->get('payment/callback', 'Payment\CoursePayment::callback');
 $routes->get('/blog', 'Blog\BlogController::index');
 $routes->get('/blog/(:segment)', 'Blog\BlogController::detail/$1');
 
+// Newsletter Route:
+$routes->post('subscribe', 'Newsletter\NewsletterController::subscribe');
+
+$routes->get('unlock/(:num)', 'Courses\CourseController::unlock/$1');
+ 
+
 
 
 // Admin
@@ -79,7 +85,7 @@ $routes->group('admin', ['filter' => 'auth'], function($routes) {
 });
 
 $routes->get('user/profile', 'User\UserController::profile');
-$routes->match(['get', 'post'], 'user/edit', 'User\UserController::editProfile');
+$routes->match(['GET', 'POST'], 'user/edit', 'User\UserController::editProfile');
 
 // Admin login
 $routes->get('admin/login', 'Admin\AdminAuthController::login');

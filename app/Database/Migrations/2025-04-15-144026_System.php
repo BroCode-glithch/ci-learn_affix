@@ -23,6 +23,10 @@ class System extends Migration
             'type'       => 'VARCHAR',
             'constraint' => '255',
         ],
+        'phone' => [
+            'type' => 'INT',
+            'constraint' => '10',
+        ],
         'created_at'  => [
             'type' => 'DATETIME',
         ],
@@ -35,13 +39,13 @@ class System extends Migration
     $this->forge->addPrimaryKey('id');
 
     // Create table
-    $this->forge->createTable('system');
+    $this->forge->createTable(table: 'system');
 
     $this->forge->addUniqueKey('email'); // Adds unique constraint to the email column
     }
 
     public function down()
     {
-        //
+        $this->forge->dropTable('system', true); // `true` forces drop if exists
     }
 }

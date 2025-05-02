@@ -13,6 +13,13 @@ class BlogController extends BaseController
     public function index()
     {     
         helper('text');
+        
+        // You can later modify this condition to check if the blog is under development
+        $isUnderDevelopment = true; // Change this based on your requirement
+    
+        if ($isUnderDevelopment) {
+            return view('under_development'); // Show the under development page
+        }
 
         $model = new Blog();
 
@@ -28,14 +35,21 @@ class BlogController extends BaseController
     
     public function detail($slug)
     {
+        // You can later modify this condition to check if the blog is under development
+        $isUnderDevelopment = true; // Change this based on your requirement
+    
+        if ($isUnderDevelopment) {
+            return view('under_development'); // Show the under development page
+        }
+    
         $model = new Blog();
         $data['blog']  = $model->where('slug', $slug)->first();
-
-        if(!$data['blog'])
-        {
+    
+        if (!$data['blog']) {
             throw PageNotFoundException::forPageNotFound('Blog not found');
         }
-
+    
+        // If the page is not under development, show the details page
         return view('blog/details', $data);
     }
     

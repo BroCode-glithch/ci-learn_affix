@@ -59,7 +59,11 @@
                                 <!-- Course Content -->
                                 <div class="properties__caption">
                                     <p><?php echo htmlspecialchars($course['category']); ?></p>
-                                    <h3><a href="<?= base_url('course/' . $course['id']); ?>"><?php echo htmlspecialchars($course['title']); ?></a></h3>
+                                    <h3>
+                                        <a href="<?= base_url('course/' . $course['id']); ?>">
+                                            <?php echo htmlspecialchars($course['title']); ?>
+                                        </a>
+                                    </h3>
                                     <p>
                                         <?php 
                                             $words = explode(" ", $course['description']); 
@@ -98,9 +102,19 @@
                                 </div>
 
                                 <!-- Affiliate Link Button -->
-                                <a href="<?php echo !empty($course['affiliate_url']) ? $course['affiliate_url'] : '#'; ?>" class="border-btn border-btn2" target="_blank">
-                                    Explore Course
-                                </a>
+                                <?php if (auth()->loggedIn()) : ?>
+                                    <?php if (isUnlocked($course['id'], $unlocked_courses)) : ?>
+                                        <?php if (!empty($course['affiliate_url'])) : ?>
+                                            <a href="<?= esc($course['affiliate_url']) ?>" target="_blank" class="border-btn border-btn2">Go to Course</a>
+                                        <?php else : ?>
+                                            <a href="<?= base_url('course/' . $course['id']) ?>" class="border-btn border-btn2">Go to Course</a>
+                                        <?php endif; ?>
+                                    <?php else : ?>
+                                        <a href="<?= base_url('unlock/' . $course['id']) ?>" class="border-btn border-btn2">Unlock Course</a>
+                                    <?php endif; ?>
+                                <?php else : ?>
+                                    <a href="<?= base_url('login') ?>" class="border-btn border-btn2">Log in to Unlock</a>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>

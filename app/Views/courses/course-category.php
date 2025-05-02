@@ -83,7 +83,7 @@
                             <div class="properties__card">
                                 <div class="properties__img overlay1">
                                     <a href="<?= base_url('course/' . $course['id']); ?>">
-                                        <img src="<?= base_url('public/assets/img/gallery/' . $course['image']); ?>" 
+                                        <img src="<?= esc($course['image']) ?>" 
                                             alt="<?= esc($course['title']); ?>">
                                     </a>
                                 </div>

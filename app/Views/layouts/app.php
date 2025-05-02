@@ -94,6 +94,14 @@
             font-weight: bold;
             font-size: 18px;
         }
+
+        a {
+            text-decoration: none !important;
+        }
+
+        li {
+            color: #fff !important;
+        }
     </style>
 
     <!-- JS: jQuery + Bootstrap -->
@@ -153,8 +161,6 @@
                                                 <li><a href="#">Blog</a>
                                                     <ul class="submenu">
                                                         <li><a href="<?= base_url('blog') ?>">Blog</a></li>
-                                                        <li><a href="#">Blog Details</a></li>
-                                                        <li><a href="#">Element</a></li>
                                                     </ul>
                                                 </li>
                                                 <li><a href="<?= base_url('contact') ?>">Contact</a></li>
@@ -185,7 +191,7 @@
     </header>
 
     <!-- Main Content -->
-    <div class="app" data-aos="zoom-in">
+    <div class="app" data-aos="zoom-out">
         <?= $this->renderSection('content'); ?>
     </div>
 
@@ -240,10 +246,11 @@
                                 <div class="footer-tittle">
                                     <h4>Newsletter</h4>
                                     <p>Subscribe to our newsletter to get the latest updates.</p>
-                                    <form action="#">
-                                        <div class="footer-form">
-                                            <input type="text" placeholder="Email Address">
-                                            <button class="btn"><i class="fas fa-arrow-right"></i></button>
+                                    <form action="<?= base_url('subscribe') ?>" method="post">
+                                        <?= csrf_field() ?>
+                                        <div class="footer-form d-flex">
+                                            <input type="email" name="email" placeholder="Email Address" required class="form-control me-2">
+                                            <button class="btn btn-primary"><i class="fas fa-arrow-right"></i></button>
                                         </div>
                                     </form>
                                 </div>
@@ -257,7 +264,7 @@
                                     <h4>Contact Info</h4>
                                     <?php if (isset($systems)): ?>
                                         <ul>
-                                            <li><strong>System Name:</strong> <?= esc($systems['name']) ?></li>
+                                            <!-- <li><strong>System Name:</strong> <?= esc($systems['name']) ?></li> -->
                                             <li><strong>Email:</strong> <a href="mailto:<?= esc($systems['email']) ?>"><?= esc($systems['email']) ?></a></li>
                                             <?php if (!empty($systems['phone'])): ?>
                                                 <li><strong>Phone:</strong> <?= esc($systems['phone']) ?></li>

@@ -63,9 +63,14 @@ function word_limiter_custom($text, $limit = 25, $end = '...')
         <div class="row">
             <div class="col-lg-8">
                 <div class="course-details-content">
-                    <div class="course-thumb">
-                        <img src="<?= base_url('public/assets/img/gallery/' . $course['image']); ?>" 
-                            alt="<?= htmlspecialchars($course['title']); ?> image" class="img-fluid">
+                    <!-- Course Preview Image or Video Thumbnail -->
+                    <div class="properties__img course-thumb">
+                        <?php 
+                            $thumbnail = $course['image'];
+                        ?>
+                        <a href="<?php echo !empty($course['affiliate_url']) ? $course['affiliate_url'] : '#'; ?>" target="_blank">
+                            <img src="<?php echo $thumbnail; ?>" alt="<?php echo htmlspecialchars($course['title']); ?>">
+                        </a>
                     </div>
                     <div class="course-info mt-4">
                         <h2><?= htmlspecialchars($course['title']); ?></h2>
@@ -100,15 +105,26 @@ function word_limiter_custom($text, $limit = 25, $end = '...')
                     <div class="course-price mt-3">
                         <h3>Price: <span class="text-primary">$<?= number_format($course['price'], 2); ?></span></h3>
                     </div>
-                    <?php if (isset(auth()->user()->username)) : ?>
-                        <a href="<?= base_url('checkout') ?>?course_id=<?= $course['id'] ?>" class="btn btn-primary mt-4">
-                            Enroll Now
-                        </a>
-                    <?php else : ?>
-                        <a href="<?= base_url('login') ?>" class="btn btn-danger mt-4">
-                            Login to Enroll
-                        </a>
-                    <?php endif; ?>                                      
+                    <?php if (isset($is_unlocked) && $is_unlocked): ?>
+                        <div class="alert alert-success mt-4">✅ You have unlocked this course!</div>
+                        <?php if (!empty($course['affiliate_url'])): ?>
+                            <a href="<?= esc($course['affiliate_url']); ?>" target="_blank" class="btn btn-success mt-2">
+                                Go to Course
+                            </a>
+                        <?php else: ?>
+                            <p class="mt-2">This course has been unlocked but no affiliate link is provided.</p>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <?php if (auth()->loggedIn()) : ?>
+                            <a href="<?= base_url('unlock/' . $course['id']); ?>" class="btn btn-warning mt-4">
+                                Unlock Course to Continue
+                            </a>
+                        <?php else: ?>
+                            <a href="<?= base_url('login') ?>" class="btn btn-danger mt-4">
+                                Login to Unlock Course
+                            </a>
+                        <?php endif; ?>
+                    <?php endif; ?>                                                        
                 </div>
             </div>
 

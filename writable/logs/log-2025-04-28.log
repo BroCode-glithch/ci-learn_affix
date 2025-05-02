@@ -1,0 +1,16 @@
+WARNING - 2025-04-28 13:30:31 --> [DEPRECATED] Passing lowercase HTTP method "get" is deprecated. Use uppercase HTTP method like "GET". in SYSTEMPATH\Router\RouteCollection.php on line 1026.
+ 1 SYSTEMPATH\Router\RouteCollection.php(1026): trigger_error('Passing lowercase HTTP method "get" is deprecated. Use uppercase HTTP method like "GET".', 16384)
+ 2 APPPATH\Config\Routes.php(88): CodeIgniter\Router\RouteCollection->match([...], 'user/edit', 'User\\UserController::editProfile')
+ 3 SYSTEMPATH\Router\RouteCollection.php(339): require('C:\\wamp64\\www\\ci-learn_affix\\app\\Config\\Routes.php')
+ 4 SYSTEMPATH\CLI\Console.php(41): CodeIgniter\Router\RouteCollection->loadRoutes()
+ 5 SYSTEMPATH\Boot.php(360): CodeIgniter\CLI\Console->run()
+ 6 SYSTEMPATH\Boot.php(104): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+ 7 ROOTPATH\spark(84): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+WARNING - 2025-04-28 13:30:31 --> [DEPRECATED] Passing lowercase HTTP method "post" is deprecated. Use uppercase HTTP method like "POST". in SYSTEMPATH\Router\RouteCollection.php on line 1026.
+ 1 SYSTEMPATH\Router\RouteCollection.php(1026): trigger_error('Passing lowercase HTTP method "post" is deprecated. Use uppercase HTTP method like "POST".', 16384)
+ 2 APPPATH\Config\Routes.php(88): CodeIgniter\Router\RouteCollection->match([...], 'user/edit', 'User\\UserController::editProfile')
+ 3 SYSTEMPATH\Router\RouteCollection.php(339): require('C:\\wamp64\\www\\ci-learn_affix\\app\\Config\\Routes.php')
+ 4 SYSTEMPATH\CLI\Console.php(41): CodeIgniter\Router\RouteCollection->loadRoutes()
+ 5 SYSTEMPATH\Boot.php(360): CodeIgniter\CLI\Console->run()
+ 6 SYSTEMPATH\Boot.php(104): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+ 7 ROOTPATH\spark(84): CodeIgniter\Boot::bootSpark(Object(Config\Paths))

@@ -2,15 +2,19 @@
 
 namespace App\Controllers\Courses;
 
-use App\Controllers\BaseController;
-use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\Courses\Courses;
+use App\Controllers\BaseController;
+use App\Models\Courses\UserUnlockedCourses;
+use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use GuzzleHttp\Client;
 
 class CourseController extends BaseController
 {
     public function index()
     {
+        helper(filenames: 'course');
+
         $courseModel = new Courses();
     
 
@@ -39,6 +43,21 @@ class CourseController extends BaseController
                 $category['image'] = $imageUrl;
             }
         }
+
+
+        // Initialize unlocked_courses array
+        $data['unlocked_courses'] = [];
+
+        if (auth()->loggedIn()) {
+            $unlockModel = new UserUnlockedCourses();
+            $unlockedRows = $unlockModel
+                ->where('user_id', auth()->user()->id)
+                ->findAll();
+
+            foreach ($unlockedRows as $row) {
+                $data['unlocked_courses'][$row['course_id']] = true;
+            }
+        }
     
         // Fetch featured (highlighted) courses
         $data['highlighted_courses'] = $courseModel->where('is_featured', 1)->orderBy('id', 'DESC')->findAll(6);
@@ -51,7 +70,7 @@ class CourseController extends BaseController
         helper('text'); // ✅ Load the text helper to enable word_limiter()
     
         $courseModel = new Courses();
-    
+     
         // Decode category name from URL
         $category = urldecode($category);
     
@@ -112,25 +131,44 @@ class CourseController extends BaseController
     
     public function show($id)
     {
-        helper(['text']); // Load the text helper
-
+        helper(['text']); // for word_limiter etc.
+        
         $courseModel = new Courses();
+        $unlockModel = new UserUnlockedCourses();
+    
         $course = $courseModel->find($id);
-
+    
         if (!$course) {
             throw PageNotFoundException::forPageNotFound("Course not found");
         }
-
-        // Fetch other courses excluding the current one
-        $other_courses = $courseModel->where('id !=', $id)->orderBy('id', 'DESC')->findAll(5);
-
-        // Pass data to the view
-        return view('courses/course-details', [
+    
+        // Optional: log view (you can store to DB or write to log file)
+        log_message('info', 'Course viewed: ' . $course['title'] . ' (ID: ' . $id . ')');
+    
+        $data = [
             'course' => $course,
-            'other_courses' => $other_courses,
-            '_course' => $course
-        ]);
+            '_course' => $course, // Just in case it's used in views
+            'other_courses' => $courseModel
+                ->where('id !=', $id)
+                ->orderBy('created_at', 'DESC')
+                ->findAll(5), // fetch 5 other courses
+            'is_unlocked' => false,
+        ];
+    
+        // If logged in, check if the course is unlocked
+        if (auth()->loggedIn()) {
+            $userId = auth()->user()->id;
+            $unlocked = $unlockModel
+                ->where('user_id', $userId)
+                ->where('course_id', $id)
+                ->first();
+    
+            $data['is_unlocked'] = !empty($unlocked);
+        }
+    
+        return view('courses/course-details', $data);
     }
+    
 
     public function coursePage()
     {
@@ -146,5 +184,34 @@ class CourseController extends BaseController
         dd($data['highlighted_courses']); 
     
         return view('courses/course', $data);
-    }   
+    }  
+    
+    
+    public function unlock($courseId)
+    {
+        if (!auth()->loggedIn()) {
+            return redirect()->to(base_url('login'));
+        }
+
+        $userId = auth()->user()->id;
+        $unlockModel = new UserUnlockedCourses();
+        $existing = $unlockModel->where('user_id', $userId)->where('course_id', $courseId)->first();
+
+        if (!$existing) {
+            $unlockModel->insert([
+                'user_id' => $userId,
+                'course_id' => $courseId,
+                'unlocked_at' => date('Y-m-d H:i:s')
+            ]);
+        }
+
+        $course = (new Courses())->find($courseId);
+
+        if ($course && !empty($course['affiliate_url'])) {
+            return redirect()->to($course['affiliate_url']);
+        }
+
+        return redirect()->to(base_url('course/' . $courseId));
+    }
+
 }
