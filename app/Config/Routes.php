@@ -65,7 +65,7 @@ $routes->get('/blog', 'Blog\BlogController::index');
 $routes->get('/blog/(:segment)', 'BlogController::detail/$1');
 
 // Newsletter Route:
-$routes->post('subscribe', 'NewsletterController::subscribe');
+$routes->post('subscribe', 'Newsletter\NewsletterController::subscribe');
 
 $routes->get('unlock/(:num)', 'Courses\CourseController::unlock/$1');
  

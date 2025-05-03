@@ -242,12 +242,12 @@
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                             <div class="single-footer-caption mb-50">
                                 <div class="footer-tittle">
-                                    <h4>Newsletter</h4>
+                                <h4>Newsletter</h4>
                                     <p>Subscribe to our newsletter to get the latest updates.</p>
                                     <form action="<?= base_url('subscribe') ?>" method="post">
                                         <?= csrf_field() ?>
                                         <div class="footer-form d-flex">
-                                            <input type="email" name="email" placeholder="Email Address" required class="form-control me-4">
+                                            <input type="email" name="email" placeholder="Email Address" required class="form-control me-2">
                                             <button class="btn btn-primary"><i class="fas fa-arrow-right"></i></button>
                                         </div>
                                     </form>

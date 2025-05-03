@@ -15,6 +15,9 @@
 <body class="sb-nav-fixed">
 
 <div id="layoutSidenav">
+        <!-- Header -->
+        <?php include APPPATH . 'Views/admin/layout/header.php'; ?>
+
         <!-- Sidebar -->
         <?php include APPPATH . 'Views/admin/partials/_sidebar.php'; ?>
 
