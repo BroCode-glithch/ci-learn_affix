@@ -16,7 +16,7 @@ class BlogAdminController extends BaseController
     {
         $this->blogModel = new Blog();
         $this->categoryModel = new Category(); // if you have it
-        helper(['form', 'url']);
+        helper(['form', 'url', 'uri']);
     }
 
     public function index()
@@ -27,9 +27,15 @@ class BlogAdminController extends BaseController
 
     public function create()
     {
-        $data['categories'] = $this->categoryModel->findAll(); // Optional if you have categories
+        // Passing the URI to the view
+        // Get the second URI segment
+        $data['current_uri'] = service('uri')->getSegment(2, '');
+
+        // Fetch distinct categories from the blogs table (assuming category is a string or integer column)
+        $data['categories'] = $this->blogModel->distinct()->select('category')->findAll();
+    
         return view('admin/blog/create', $data);
-    }
+    }   
 
     public function store()
     {
@@ -62,56 +68,75 @@ class BlogAdminController extends BaseController
 
     public function edit($id)
     {
-        $blog = $this->blogModel->find($id);
-        if (!$blog) {
-            return redirect()->to('/admin/blog')->with('error', 'Blog post not found.');
-        }
+        // Fetch the blog with its category data
+        $blog = $this->blogModel->select('blogs.*, categories.id as category_id, categories.name as category_name')
+            ->join('categories', 'categories.id = blogs.category_id', 'left')
+            ->where('blogs.id', $id)
+            ->first();
 
-        $data['blog'] = $blog;
-        $data['categories'] = $this->categoryModel->findAll(); // Optional
+        // Fetch all categories for the dropdown
+        $categories = $this->categoryModel->findAll();
 
-        return view('admin/blog/edit', $data);
-    }
+        // Pass both blog and categories to the view
+        return view('admin/blog/edit', [
+            'blog' => $blog,
+            'categories' => $categories
+        ]);
+    }    
 
     public function update($id)
     {
-        $blog = $this->blogModel->find($id);
-        if (!$blog) {
-            return redirect()->to('/admin/blog')->with('error', 'Blog post not found.');
+        $model = new Blog();  // Replace with your actual model name
+    
+        // Get the current post from the database
+        $post = $model->find($id);
+    
+        // If the post does not exist, redirect
+        if (!$post) {
+            return redirect()->to('/admin/blog')->with('error', 'Post not found');
         }
-
-        $validationRules = [
-            'title'   => 'required|min_length[3]',
-            'content' => 'required',
+    
+        // Validate form input
+        $rules = [
+            'title'   => 'required|min_length[3]|max_length[255]',
+            'content' => 'required|min_length[3]',
+            'category' => 'required|is_natural_no_zero',
         ];
-
-        if ($this->request->getFile('image')->isValid()) {
-            $validationRules['image'] = 'uploaded[image]|max_size[image,2048]|is_image[image]';
-        }
-
-        if (!$this->validate($validationRules)) {
+    
+        // Check if validation fails
+        if (!$this->validate($rules)) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
-
-        $updateData = [
-            'title'      => $this->request->getPost('title'),
-            'slug'       => url_title($this->request->getPost('title'), '-', true),
-            'content'    => $this->request->getPost('content'),
-            'category'   => $this->request->getPost('category'),
-            'updated_at' => date('Y-m-d H:i:s')
-        ];
-
-        // Handle image upload
-        if ($this->request->getFile('image')->isValid()) {
-            $imageFile = $this->request->getFile('image');
-            $newName = $imageFile->getRandomName();
-            $imageFile->move('public/assets/img/blog', $newName);
-            $updateData['image'] = $newName;
+    
+        // Process the image upload if a new image is provided
+        $image = $this->request->getFile('image');
+        if ($image && $image->isValid()) {
+            // Upload the new image and replace the old one if needed
+            $imageName = $image->getRandomName();
+            $image->move(WRITEPATH . 'uploads', $imageName);
+    
+            // Optionally, delete the old image if you want
+            if ($post['image']) {
+                unlink(WRITEPATH . 'uploads/' . $post['image']);
+            }
+        } else {
+            // Keep the old image if no new image is uploaded
+            $imageName = $post['image'];
         }
-
-        $this->blogModel->update($id, $updateData);
-
-        return redirect()->to('/admin/blog')->with('success', 'Blog post updated successfully.');
+    
+        // Prepare data for updating
+        $data = [
+            'title'   => $this->request->getPost('title'),
+            'content' => $this->request->getPost('content'),
+            'category_id' => $this->request->getPost('category'),
+            'image' => $imageName,
+        ];
+    
+        // Update the post in the database
+        $model->update($id, $data);
+    
+        // Redirect to the blog list page with success message
+        return redirect()->to('/admin/blog')->with('success', 'Blog post updated successfully!');
     }
 
     public function delete($id)

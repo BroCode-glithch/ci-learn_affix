@@ -1,6 +1,7 @@
-<?= $this->extend('admin/layouts/app') ?>
+<?php $this->extend('admin/layout/master') ?>
 
-<?= $this->section('content') ?>
+<?php $this->section('content') ?>
+
 <div class="container mt-5">
     <h2>All Blog Posts</h2>
     <a href="<?= base_url('/admin/blog/create') ?>" class="btn btn-primary mb-3">Add New Post</a>
@@ -13,6 +14,7 @@
             <tr>
                 <th>Title</th>
                 <th>Category</th>
+                <th>Description</th>
                 <th>Created At</th>
                 <th>Actions</th>
             </tr>
@@ -21,6 +23,7 @@
             <?php foreach ($blogs as $blog): ?>
                 <tr>
                     <td><?= esc($blog['title']) ?></td>
+                    <td><?= esc($blog['content']) ?></td>
                     <td><?= esc($blog['category']) ?></td>
                     <td><?= esc($blog['created_at']) ?></td>
                     <td>
@@ -32,4 +35,5 @@
         </tbody>
     </table>
 </div>
+
 <?= $this->endSection() ?>

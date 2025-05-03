@@ -12,19 +12,19 @@ class Category extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [
-        'name', 'slug'
-    ];
 
-    // A method to get categories with their post count
-    // public function getCategoriesWithPostCount()
-    // {
-    //     // Example query to get category name and count of posts in each category
-    //     return $this->select('categories.*, COUNT(posts.id) as post_count')
-    //                 ->join('posts', 'posts.category_id = categories.id', 'left')
-    //                 ->groupBy('categories.id')
-    //                 ->findAll();
-    // }
+    protected $allowedFields = ['name', 'slug'];  // Add other fields as needed
+
+    /**
+     * Get categories with post count.
+     */
+    public function getCategoriesWithPostCount()
+    {
+        return $this->select('categories.*, COUNT(blogs.id) as post_count')
+                    ->join('blogs', 'blogs.category_id = categories.id', 'left')
+                    ->groupBy('categories.id')
+                    ->findAll();
+    }
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -33,7 +33,7 @@ class Category extends Model
     protected array $castHandlers = [];
 
     // Dates
-    protected $useTimestamps = false;
+    protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';

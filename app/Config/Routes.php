@@ -91,13 +91,27 @@ $routes->group('admin', ['filter' => 'adminAuth'], function($routes) {
     // Admin dashboard
     $routes->get('dashboard', 'Admin\AdminController::index');
     
-    $routes->get('blog', 'BlogAdminController::index');
-    $routes->get('blog/create', 'BlogAdminController::create');
-    $routes->post('blog/store', 'BlogAdminController::store');
-    $routes->get('blog/edit/(:num)', 'BlogAdminController::edit/$1');
-    $routes->post('blog/update/(:num)', 'BlogAdminController::update/$1');
-    $routes->get('blog/delete/(:num)', 'BlogAdminController::delete/$1');
+    // Blog routes
+    $routes->get('blog', 'Admin\BlogAdminController::index');
+    $routes->get('blog/create', 'Admin\BlogAdminController::create');
+    $routes->post('blog/store', 'Admin\BlogAdminController::store');
+    $routes->get('blog/edit/(:num)', 'Admin\BlogAdminController::edit/$1');
+    $routes->post('blog/update/(:num)', 'Admin\BlogAdminController::update/$1');
+    $routes->get('blog/delete/(:num)', 'Admin\BlogAdminController::delete/$1');
+    
+    // Blog category routes (inside admin group)
+    $routes->get('blog/category', 'Admin\BlogCategoryController::index');
+    $routes->match(['GET', 'POST'], 'blog/category/create', 'Admin\BlogCategoryController::create');
+    $routes->get('blog/category/edit/(:num)', 'Admin\BlogCategoryController::edit/$1');
+    $routes->post('blog/category/edit/(:num)', 'Admin\BlogCategoryController::edit/$1');
+
+    // Admin Blog Tag Routes
+    $routes->get('blog/tag', 'Admin\BlogTagController::index');
+    $routes->match(['GET', 'POST'], 'blog/tag/create', 'Admin\BlogTagController::create');
+    $routes->get('blog/tag/edit/(:num)', 'Admin\BlogTagController::edit/$1');
+    $routes->post('blog/tag/edit/(:num)', 'Admin\BlogTagController::edit/$1');
 });
+
 
 $routes->get('user/profile', 'User\UserController::profile');
 $routes->match(['GET', 'POST'], 'user/edit', 'User\UserController::editProfile');

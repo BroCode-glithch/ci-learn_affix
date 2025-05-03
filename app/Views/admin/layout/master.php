@@ -13,21 +13,29 @@
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
 <body class="sb-nav-fixed">
-    <!-- Header Section -->
-    <?= $this->include('admin/layout/header'); ?>
 
-    <div class="container">
-        <!-- Sidebar Section -->
-        <?= $this->include('admin/layout/sidebar'); ?>
+<div id="layoutSidenav">
+        <!-- Sidebar -->
+        <?php include APPPATH . 'Views/admin/partials/_sidebar.php'; ?>
 
-        <!-- Main Content -->
-        <div class="content-wrapper">
-            <?= $this->renderSection('content'); ?>
+        <div id="layoutSidenav_content">
+            <!-- Conditionally include the header based on the URI -->
+            <?php if (isset($current_uri) && $current_uri === 'create'): ?>
+                <!-- If the page is 'create', don't include the header -->
+            <?php else: ?>
+                <?php echo view('admin/partials/_header'); ?>
+            <?php endif; ?>
+
+            <!-- Main Content (this will be injected from your page views) -->
+            <main>
+                <?= $this->renderSection('content') ?>
+            </main>
+
+            <!-- Footer -->
+            <?php include APPPATH . 'Views/admin/partials/_footer.php'; ?>
         </div>
     </div>
 
-    <!-- Footer Section -->
-    <?= $this->include('admin/layout/footer'); ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="<?php echo base_url('public/admin/js/scripts.js') ?>"></script>

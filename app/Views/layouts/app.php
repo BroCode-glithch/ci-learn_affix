@@ -204,23 +204,21 @@
                         <!-- About / Brand Area -->
                         <div class="col-xl-3 col-lg-3 col-md-6 col-sm-8">
                             <div class="single-footer-caption mb-50">
-                                <div class="single-footer-caption mb-30">
-                                    <div class="footer-logo">
-                                        <a href="<?= base_url('/') ?>">
-                                            <img src="<?= base_url('public/assets/img/logo/logo2_footer.png') ?>" alt="">
-                                        </a>
+                                <div class="footer-logo">
+                                    <a href="<?= base_url('/') ?>">
+                                        <img src="<?= base_url('public/assets/img/logo/logo2_footer.png') ?>" alt="">
+                                    </a>
+                                </div>
+                                <div class="footer-tittle">
+                                    <div class="footer-pera">
+                                        <p>Start your learning journey with our curated online courses for all levels and interests.</p>
                                     </div>
-                                    <div class="footer-tittle">
-                                        <div class="footer-pera">
-                                            <p>Start your learning journey with our curated online courses for all levels and interests.</p>
-                                        </div>
-                                    </div>
-                                    <div class="footer-social">
-                                        <a href="https://twitter.com/dailydewcode"><i class="fab fa-twitter"></i></a>
-                                        <a href="https://github.com/BroCode-glithch"><i class="fab fa-github"></i></a>
-                                        <a href="https://linkedin.com/in/dailydewcode"><i class="fab fa-linkedin-in"></i></a>
-                                        <a href="https://dailydewcode.dev"><i class="fas fa-globe"></i></a>
-                                    </div>
+                                </div>
+                                <div class="footer-social">
+                                    <a href="https://twitter.com/dailydewcode"><i class="fab fa-twitter"></i></a>
+                                    <a href="https://github.com/BroCode-glithch"><i class="fab fa-github"></i></a>
+                                    <a href="https://linkedin.com/in/dailydewcode"><i class="fab fa-linkedin-in"></i></a>
+                                    <a href="https://dailydewcode.dev"><i class="fas fa-globe"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -234,7 +232,7 @@
                                         <li><a href="<?= base_url('/') ?>">Home</a></li>
                                         <li><a href="<?= base_url('courses') ?>">Courses</a></li>
                                         <li><a href="<?= base_url('about') ?>">About</a></li>
-                                        <li><a href="<?= base_url('contact') ?>">Contact</a></li>
+                                        <!-- <li><a href="<?= base_url('contact') ?>">Contact</a></li> -->
                                     </ul>
                                 </div>
                             </div>
@@ -249,42 +247,10 @@
                                     <form action="<?= base_url('subscribe') ?>" method="post">
                                         <?= csrf_field() ?>
                                         <div class="footer-form d-flex">
-                                            <input type="email" name="email" placeholder="Email Address" required class="form-control me-2">
+                                            <input type="email" name="email" placeholder="Email Address" required class="form-control me-4">
                                             <button class="btn btn-primary"><i class="fas fa-arrow-right"></i></button>
                                         </div>
                                     </form>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Contact Us -->
-                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
-                            <div class="single-footer-caption mb-50">
-                                <div class="footer-tittle">
-                                    <h4>Contact Info</h4>
-                                    <?php if (isset($systems)): ?>
-                                        <ul>
-                                            <!-- <li><strong>System Name:</strong> <?= esc($systems['name']) ?></li> -->
-                                            <li><strong>Email:</strong> <a href="mailto:<?= esc($systems['email']) ?>"><?= esc($systems['email']) ?></a></li>
-                                            <?php if (!empty($systems['phone'])): ?>
-                                                <li><strong>Phone:</strong> <?= esc($systems['phone']) ?></li>
-                                            <?php endif; ?>
-                                            <?php if (!empty($systems['address'])): ?>
-                                                <li><strong>Address:</strong> <?= esc($systems['address']) ?></li>
-                                            <?php endif; ?>
-                                        </ul>
-                                    <?php endif; ?>
-                                    <hr>
-                                    <?php if (isset($developer)): ?>
-                                        <h5>Developer Info</h5>
-                                        <ul>
-                                            <li><strong>CodeName:</strong> <?= esc($developer['name']) ?></li>
-                                            <li><strong>Brand:</strong> <?= esc($developer['brand_name']) ?></li>
-                                            <li><strong>Email:</strong> <a href="mailto:<?= esc($developer['email']) ?>"><?= esc($developer['email']) ?></a></li>
-                                            <li><strong>WhatsApp:</strong> <a href="https://wa.me/<?= esc(ltrim($developer['whatsapp_phone'], '0')) ?>" target="_blank"><?= esc($developer['whatsapp_phone']) ?></a></li>
-                                            <li><strong>Portfolio:</strong> <a href="<?= esc($developer['portfolio_url']) ?>" target="_blank">View</a></li>
-                                        </ul>
-                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
@@ -301,8 +267,10 @@
                             <div class="col-xl-12">
                                 <div class="footer-copy-right text-center">
                                     <p>
-                                        &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | 
-                                        Developed with ❤️ by <a href="<?= esc($developer['portfolio_url']) ?>" target="_blank"><?= esc($developer['brand_name']) ?></a>
+                                        &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved |
+                                        <span class="footer-dev-info">
+                                            Developed by <a href="<?= esc($developer['portfolio_url']) ?>" target="_blank"><?= esc($developer['brand_name']) ?></a>
+                                        </span>
                                     </p>
                                 </div>
                             </div>
@@ -312,7 +280,6 @@
             </div>
         </div>
     </footer>
-
 
     <!-- Back to Top -->
     <div id="back-top">

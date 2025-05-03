@@ -2,11 +2,13 @@
 
 namespace App\Controllers\Blog;
 
+use App\Models\Blog\Tag;
 use App\Models\Blog\Blog;
-use App\Controllers\BaseController;
 use App\Models\Blog\Category;
-use CodeIgniter\Exceptions\PageNotFoundException;
+use App\Models\CategoryModel;
+use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\Exceptions\PageNotFoundException;
 
 class BlogController extends BaseController
 {
@@ -15,23 +17,31 @@ class BlogController extends BaseController
         helper('text');
         
         // You can later modify this condition to check if the blog is under development
-        $isUnderDevelopment = true; // Change this based on your requirement
+        $isUnderDevelopment = false; // Set to false to enable the blog
     
         if ($isUnderDevelopment) {
             return view('under_development'); // Show the under development page
         }
-
+    
         $model = new Blog();
 
         $data['blogs'] = $model->orderBy('created_at', 'DESC')->findAll();
-        $data['recentPosts'] = $model->orderBy('created_at', 'DESC')->findAll(4); // Last 4 posts
-        // $categoryModel = new Category();  // Assuming you have a CategoryModel to get categories
+        $data['recentPosts'] = $model->orderBy('created_at', 'DESC')->findAll(4);
 
-        // // Fetching all categories from the database
-        // $data['categories'] = $categoryModel->findAll();  // This will get all the categories
+        // Get unique categories from the blogs table
+        $categoryModel = new Category();
+        $data['categories'] = $categoryModel->select('categories.name, categories.slug')
+            ->join('blogs', 'blogs.category_id = categories.id')
+            ->groupBy('categories.id')
+            ->selectCount('blogs.id', 'post_count')
+            ->findAll();
+
+        $tagModel = new Tag();
+        $data['tags'] = $tagModel->findAll();
 
         return view('blog/blog', $data);
-    }  
+    }
+     
     
     public function detail($slug)
     {

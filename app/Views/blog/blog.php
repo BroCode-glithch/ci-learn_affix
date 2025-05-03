@@ -82,7 +82,7 @@
                             <aside class="single_sidebar_widget post_category_widget">
                                 <h4 class="widget_title" style="color: #2d2d2d;">Categories</h4>
                                 <ul class="list cat-list">
-                                    <?php foreach ($blog as $category): ?>
+                                    <?php foreach ($categories as $category): ?>
                                         <li>
                                             <a href="<?= base_url('category/' . esc($category['slug'])) ?>" class="d-flex">
                                                 <p><?= esc($category['name']) ?></p>

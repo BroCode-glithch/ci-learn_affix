@@ -11,16 +11,6 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
-/**
- * Class BaseController
- *
- * BaseController provides a convenient place for loading components
- * and performing functions that are needed by all your controllers.
- * Extend this class in any new controllers:
- *     class Home extends BaseController
- *
- * For security be sure to declare any new methods as protected or private.
- */
 abstract class BaseController extends Controller
 {
     /**
@@ -37,7 +27,7 @@ abstract class BaseController extends Controller
      *
      * @var list<string>
      */
-    protected $helpers = ['url'];
+    protected $helpers = ['form', 'url', 'uri'];
 
     /**
      * Be sure to declare properties for any property fetch you initialized.
@@ -65,8 +55,17 @@ abstract class BaseController extends Controller
         // Preload any models, libraries, etc, here.
 
         // E.g.: $this->session = service('session');
-         // Optional: Share with views globally
-         service('renderer')->setVar('systems', $this->system);
-         service('renderer')->setVar('developer', $this->developer);
+
+        // Share system and developer globally with views
+        service('renderer')->setVar('systems', $this->system);
+        service('renderer')->setVar('developer', $this->developer);
+
+        // Fetch the current URI segment and share it globally
+        $uriService = service('uri');
+        $current_uri = $uriService->getTotalSegments() >= 2 ? $uriService->getSegment(2) : '';
+         // This gets the second URI segment (adjust if necessary)
+
+        // Share the current URI globally across all views
+        service('renderer')->setVar('current_uri', $current_uri);
     }
 }
