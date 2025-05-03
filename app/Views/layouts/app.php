@@ -167,6 +167,7 @@
                                                 <?php if (!auth()->user()) : ?>
                                                     <li class="button-header margin-left"><a href="<?= base_url('register') ?>" class="btn">Join</a></li>
                                                     <li class="button-header"><a href="<?= base_url('login') ?>" class="btn btn3">Log in</a></li>
+                                                    <li class="button-header"><a href="<?= base_url('admin/login') ?>" class="btn btn3">Admin Log in</a></li>
                                                 <?php else : ?>
                                                     <li><a href="#"><?= auth()->user()->username; ?></a>
                                                         <ul class="submenu">

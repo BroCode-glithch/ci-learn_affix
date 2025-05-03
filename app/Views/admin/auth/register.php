@@ -52,7 +52,8 @@
         </form>
 
         <div class="text-center mt-3">
-            <a href="<?= site_url('admin/login') ?>">Already have an account? Login</a>
+            <a href="<?= site_url('admin/login') ?>">Already have an account? Login</a><br>
+            <a href="<?= site_url('/') ?>">Home</a>
         </div>
     </div>
 </div>

@@ -37,7 +37,8 @@
         </form>
 
         <div class="text-center mt-3">
-            <a href="<?= site_url('admin/register') ?>">Don't have an account? Register</a>
+            <a href="<?= site_url('admin/register') ?>">Don't have an account? Register</a><br>
+            <a href="<?= site_url('/') ?>">Home</a>
         </div>
     </div>
 </div>
