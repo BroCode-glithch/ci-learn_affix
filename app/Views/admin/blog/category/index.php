@@ -23,9 +23,9 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($categories as $category): ?>
+            <?php foreach ($categories as $key => $category): ?>
                 <tr>
-                    <td><?= esc($category['id']) ?></td>
+                    <td><?= esc($key + 1) ?></td>
                     <td><?= esc($category['name']) ?></td>
                     <td><?= esc($category['slug']) ?></td>
                     <td>

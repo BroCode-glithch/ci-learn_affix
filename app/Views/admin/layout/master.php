@@ -11,6 +11,7 @@
         <link href="<?php echo base_url('public/admin/css/styles.css') ?>" rel="stylesheet" />
         <link rel="shortcut icon" type="image/x-icon" href="<?= base_url('public/assets/img/favicon.ico') ?>">
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
     </head>
 <body class="sb-nav-fixed">
 

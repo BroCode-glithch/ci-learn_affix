@@ -17,13 +17,14 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($tags as $tag): ?>
+            <?php foreach ($tags as $key => $tag): ?>
                 <tr>
-                    <td><?= esc($tag['id']) ?></td>
+                    <td><?= esc($key + 1) ?></td>
                     <td><?= esc($tag['name']) ?></td>
                     <td><?= esc($tag['slug']) ?></td>
                     <td>
                         <a href="<?= site_url('admin/blog/tag/edit/' . $tag['id']) ?>" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="<?= site_url('admin/blog/tag/delete/' . $tag['id']) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this category?')">Delete</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

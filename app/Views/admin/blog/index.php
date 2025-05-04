@@ -12,6 +12,7 @@
     <table class="table table-bordered">
         <thead>
             <tr>
+                <th>#</th>
                 <th>Title</th>
                 <th>Category</th>
                 <th>Description</th>
@@ -20,8 +21,9 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($blogs as $blog): ?>
+            <?php foreach ($blogs as $key => $blog): ?>
                 <tr>
+                    <td><?= esc($key + 1) ?></td>
                     <td><?= esc($blog['title']) ?></td>
                     <td><?= esc($blog['content']) ?></td>
                     <td><?= esc($blog['category']) ?></td>

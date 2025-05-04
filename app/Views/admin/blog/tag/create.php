@@ -15,7 +15,7 @@
         </div>
     <?php endif; ?>
 
-    <form action="<?= site_url('admin/blog/tag/create') ?>" method="post">
+    <form action="<?= site_url('admin/blog/tag/store') ?>" method="post">
         <?= csrf_field() ?>
 
         <div class="mb-3">
